@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Practitioner {
+  id          Int       @id @default(autoincrement())
+  name        String
+  specialty   String
+  description String
+  eventTypeId String
+  basePrice   Int
+
+  bookings    Booking[]
+}
+
+model Booking {
+  id              Int       @id @default(autoincrement())
+  practitionerId  Int
+  practitioner    Practitioner @relation(fields: [practitionerId], references: [id])
+
+  slot            DateTime
+  name            String
+  email           String
+  phone           String
+
+  status          String
+  stripeSessionId String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
