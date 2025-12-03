@@ -1,41 +1,72 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# =====================================
+# NODE / NEXT.JS DEFAULTS
+# =====================================
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+node_modules/
+.next/
+out/
+.turbo/
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+*.log
 
-# env files (can opt-in for committing if needed)
-.env*
 
-# vercel
-.vercel
+# =====================================
+# OPERATING SYSTEM / EDITOR
+# =====================================
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+.DS_Store
+.vscode/
+.idea/
+
+
+# =====================================
+# ENVIRONMENT FILES
+# =====================================
+
+# Local private env
+.env
+.env.local
+.env.development
+.env.production
+
+# Keep example env
+!.env.example
+
+
+# =====================================
+# PRISMA (Fase 1)
+# =====================================
+
+/prisma/*.db
+/prisma/*.sqlite
+/prisma/dev.db
+/prisma/migrations/.DS_Store
+
+
+# =====================================
+# SECURITY / CRYPTO
+# =====================================
+
+# Private keys only
+*.key
+*.pem
+*.cert
+
+# Allow public assets
+!public/*.pem
+!public/*.key
+
+
+# =====================================
+# BUILD OUTPUT (Next rarely uses build/)
+# =====================================
+
+# In case a lib or script generates build/
+build/
+
+
+# =====================================
+# VERCEL
+# =====================================
+
+.vercel/
