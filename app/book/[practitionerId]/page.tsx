@@ -118,22 +118,22 @@ export default async function Page({ params }: PageProps) {
 
     const availability = await fetchAvailability();
 
-let slots = Array.isArray(availability.slots) ? availability.slots : [];
-let availabilityError = !!availability.error;
+    let slots = Array.isArray(availability.slots) ? availability.slots : [];
+    let availabilityError = !!availability.error;
 
-// Fallback temporário: se deu erro e não veio slot nenhum,
-// gera alguns slots fake só pra validar a UX da seleção.
-if (availabilityError && slots.length === 0) {
-  const now = new Date();
+    // Fallback temporário: se deu erro e não veio slot nenhum,
+    // gera alguns slots fake só pra validar a UX da seleção.
+    if (availabilityError && slots.length === 0) {
+        const now = new Date();
 
-  slots = Array.from({ length: 6 }).map((_, i) => ({
-    start: new Date(
-      now.getTime() + (i + 1) * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000 // próximos dias às 14:00
-    ).toISOString(),
-  }));
+        slots = Array.from({ length: 6 }).map((_, i) => ({
+            start: new Date(
+                now.getTime() + (i + 1) * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000 // próximos dias às 14:00
+            ).toISOString(),
+        }));
 
-  availabilityError = false; // trata fallback como "ok" pro front
-}
+        availabilityError = false; // trata fallback como "ok" pro front
+    }
 
 
     // -------------------------------------
@@ -171,11 +171,19 @@ if (availabilityError && slots.length === 0) {
                     </div>
                 </header>
 
-                                {/* MAIN GRID: LEFT (info + form) / RIGHT (availability) */}
+                {availabilityError && (
+                    <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                        We&apos;re temporarily unable to sync live availability, so the times shown
+                        below are example slots for now.
+                    </p>
+                )}
+
+
+                {/* MAIN GRID: LEFT (info + form) / RIGHT (availability) */}
                 <BookingClientSection
-                  practitioner={practitioner}
-                  slots={slots}
-                  availabilityError={availabilityError}
+                    practitioner={practitioner}
+                    slots={slots}
+                    availabilityError={availabilityError}
                 />
 
 

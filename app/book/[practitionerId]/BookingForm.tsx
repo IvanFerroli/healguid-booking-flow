@@ -175,6 +175,19 @@ export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) 
                 </p>
             </div>
 
+            {selectedSlot && (
+                <p className="text-xs text-brand-teal">
+                    Selected time:{" "}
+                    {new Date(selectedSlot).toLocaleString("en-GB", {
+                        weekday: "short",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        day: "2-digit",
+                        month: "short",
+                    })}
+                </p>
+            )}
+
             {/* Name */}
             <div>
                 <label className="mb-1 block text-sm font-medium">
@@ -404,10 +417,19 @@ export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) 
                 <button
                     type="submit"
                     className="hg-btn-primary w-full justify-center"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !selectedSlot}
                 >
-                    {isSubmitting ? "Redirecting to checkout..." : "Request Consultation"}
+                    {isSubmitting
+                        ? "Redirecting to checkout..."
+                        : selectedSlot
+                            ? "Request Consultation"
+                            : "Select a time to continue"}
                 </button>
+                {!selectedSlot && !isSubmitting && (
+                    <p className="mt-2 text-xs text-text-soft text-center">
+                        Select an available time on the right to enable your booking.
+                    </p>
+                )}
             </div>
         </form>
     );
