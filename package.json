@@ -9,25 +9,33 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "prisma db seed"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^5.22.0",
     "date-fns": "^4.1.0",
     "next": "16.0.6",
     "prisma": "^5.22.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "stripe": "^20.0.0"
+    "react-hook-form": "^7.68.0",
+    "stripe": "^20.0.0",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@types/node": "^20.19.25",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.22",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.0.6",
     "postcss": "^8.5.6",
