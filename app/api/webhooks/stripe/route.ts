@@ -9,80 +9,90 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-11-17.clover",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // helper para pegar raw body corretamente
 async function getRawBody(req: Request): Promise<Buffer> {
-  const arrayBuffer = await req.arrayBuffer();
-  return Buffer.from(arrayBuffer);
+    const arrayBuffer = await req.arrayBuffer();
+    return Buffer.from(arrayBuffer);
 }
 
 export async function POST(req: Request) {
-  const signature = req.headers.get("stripe-signature");
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const signature = req.headers.get("stripe-signature");
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!signature || !webhookSecret) {
-    return NextResponse.json(
-      { error: "Missing signature or secret" },
-      { status: 400 }
-    );
-  }
-
-  let event: Stripe.Event;
-
-  try {
-    const rawBody = await getRawBody(req);
-
-    event = stripe.webhooks.constructEvent(
-      rawBody,
-      signature,
-      webhookSecret
-    );
-
-    console.log("[stripe-webhook] VALID:", event.type);
-
-  } catch (err: any) {
-    console.error("[stripe-webhook] Invalid signature:", err.message);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-  }
-
-  // -------------------------------
-  // checkout.session.completed
-  // -------------------------------
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
-
-    const bookingId = session.metadata?.bookingId;
-
-    if (!bookingId) {
-      console.error("[webhook] Missing bookingId");
-      return NextResponse.json({ ok: true });
+    if (!signature || !webhookSecret) {
+        return NextResponse.json(
+            { error: "Missing signature or secret" },
+            { status: 400 }
+        );
     }
 
-    // idempotência
-    const booking = await prisma.booking.findUnique({
-      where: { id: Number(bookingId) },
-    });
+    let event: Stripe.Event;
 
-    if (!booking) {
-      console.error("[webhook] Booking not found:", bookingId);
-      return NextResponse.json({ ok: true });
+    try {
+        const rawBody = await getRawBody(req);
+
+        event = stripe.webhooks.constructEvent(
+            rawBody,
+            signature,
+            webhookSecret
+        );
+
+        console.log("[stripe-webhook] VALID:", event.type);
+
+    } catch (err: any) {
+        console.error("[stripe-webhook] Invalid signature:", err.message);
+        return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    if (booking.status === "confirmed") {
-      console.log("[webhook] Already confirmed");
-      return NextResponse.json({ ok: true });
+    // -------------------------------
+    // checkout.session.completed
+    // -------------------------------
+    if (event.type === "checkout.session.completed") {
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        // 🔐 1. Payment must be successful
+        if (session.payment_status !== "paid") {
+            console.log(
+                "[webhook] Session completed but payment not paid. Status:",
+                session.payment_status
+            );
+            return NextResponse.json({ ok: true });
+        }
+
+        // 🔍 2. Extract bookingId
+        const bookingId = session.metadata?.bookingId;
+
+        if (!bookingId) {
+            console.error("[webhook] Missing bookingId");
+            return NextResponse.json({ ok: true });
+        }
+
+        // 🔄 3. Idempotência
+        const booking = await prisma.booking.findUnique({
+            where: { id: Number(bookingId) },
+        });
+
+        if (!booking) {
+            console.error("[webhook] Booking not found:", bookingId);
+            return NextResponse.json({ ok: true });
+        }
+
+        if (booking.status === "confirmed") {
+            console.log("[webhook] Already confirmed");
+            return NextResponse.json({ ok: true });
+        }
+
+        // ✅ 4. Confirm booking
+        await prisma.booking.update({
+            where: { id: booking.id },
+            data: { status: "confirmed" },
+        });
+
+        console.log("[webhook] Booking confirmed:", bookingId);
     }
 
-    await prisma.booking.update({
-      where: { id: booking.id },
-      data: { status: "confirmed" },
-    });
 
-    console.log("[webhook] Booking confirmed:", bookingId);
-  }
-
-  return NextResponse.json({ received: true });
+    return NextResponse.json({ received: true });
 }

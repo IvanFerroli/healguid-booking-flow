@@ -4,9 +4,10 @@ import { fetchCalAvailability } from "@/lib/calClient";
 
 export async function GET(
   req: Request,
-  ctx: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await ctx.params;
+  const { id } = params;
+
 
   try {
     const practitioner = await prisma.practitioner.findUnique({
