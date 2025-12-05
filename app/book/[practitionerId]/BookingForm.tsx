@@ -29,44 +29,46 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 
 type BookingFormProps = {
     practitionerId: number;
+    selectedSlot?: string | null;
 };
 
+
 const bookingResolver: Resolver<BookingFormValues> = async (
-  values,
-  context,
-  options
+    values,
+    context,
+    options
 ) => {
-  // Usa o zodResolver original
-  const baseResolver = zodResolver(bookingSchema);
+    // Usa o zodResolver original
+    const baseResolver = zodResolver(bookingSchema);
 
-  try {
-    return await baseResolver(values, context, options);
-  } catch (err) {
-    // Se por algum motivo o resolver ainda jogar um ZodError pra fora,
-    // convertemos manualmente em errors do RHF em vez de explodir na tela.
-    if (err instanceof z.ZodError) {
-      const fieldErrors = err.issues.reduce((all, issue) => {
-        const pathKey = issue.path[0] as keyof BookingFormValues | undefined;
-        if (!pathKey) return all;
+    try {
+        return await baseResolver(values, context, options);
+    } catch (err) {
+        // Se por algum motivo o resolver ainda jogar um ZodError pra fora,
+        // convertemos manualmente em errors do RHF em vez de explodir na tela.
+        if (err instanceof z.ZodError) {
+            const fieldErrors = err.issues.reduce((all, issue) => {
+                const pathKey = issue.path[0] as keyof BookingFormValues | undefined;
+                if (!pathKey) return all;
 
-        return {
-          ...all,
-          [pathKey]: {
-            type: "validation",
-            message: issue.message,
-          },
-        };
-      }, {} as any);
+                return {
+                    ...all,
+                    [pathKey]: {
+                        type: "validation",
+                        message: issue.message,
+                    },
+                };
+            }, {} as any);
 
-      return {
-        values: {} as any,
-        errors: fieldErrors,
-      };
+            return {
+                values: {} as any,
+                errors: fieldErrors,
+            };
+        }
+
+        // Se não for ZodError, deixa estourar (erro real de código)
+        throw err;
     }
-
-    // Se não for ZodError, deixa estourar (erro real de código)
-    throw err;
-  }
 };
 
 const HEALTH_GOALS = [
@@ -94,7 +96,7 @@ const START_TIMELINE_OPTIONS = [
     "Just exploring options",
 ];
 
-export function BookingForm({ practitionerId }: BookingFormProps) {
+export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -115,15 +117,22 @@ export function BookingForm({ practitionerId }: BookingFormProps) {
         setIsSubmitting(true);
         setSubmitError(null);
 
+        // Garantia extra: não deixa enviar sem slot
+        if (!selectedSlot) {
+            setSubmitError("Please select a time slot before continuing.");
+            setIsSubmitting(false);
+            return;
+        }
+
         try {
-            const nowIso = new Date().toISOString();
+            const slotIso = selectedSlot!; // garantido pelo if acima
 
             const response = await fetch("/api/bookings", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     practitionerId,
-                    slot: nowIso,
+                    slot: slotIso,
                     name: data.name,
                     email: data.email,
                     phone: data.phone,
