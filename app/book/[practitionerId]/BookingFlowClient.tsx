@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BookingForm } from "./BookingForm";
 import { AvailabilityPicker } from "./AvailabilityPicker";
-import type { Slot } from "./AvailabilityPicker";
+import type { Slot } from "./types";
 
 type BookingFlowClientProps = {
     practitionerId: number;

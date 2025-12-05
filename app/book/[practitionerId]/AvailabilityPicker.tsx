@@ -1,5 +1,8 @@
 "use client";
 
+import { groupSlotsByDay } from "./utils/slotUtils";
+import { SlotDayGroup } from "./SlotDayGroup";
+
 export type Slot = {
     start: string; // ISO datetime
 };
@@ -19,6 +22,7 @@ export function AvailabilityPicker({
     selectedSlot,
     onSelectSlot,
 }: AvailabilityPickerProps) {
+    const groups = groupSlotsByDay(slots);
     // Caso não haja slots
     if (!slots || slots.length === 0) {
         return (
@@ -29,40 +33,19 @@ export function AvailabilityPicker({
     }
 
     return (
-        <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
-                {slots.slice(0, 8).map((slot) => {
-                    const isSelected = selectedSlot === slot.start;
-
-                    return (
-                        <button
-                            key={slot.start}
-                            type="button"
-                            onClick={() => onSelectSlot(isSelected ? null : slot)}
-                            aria-pressed={isSelected}
-                            className={`
-                w-full rounded-lg border px-3 py-2 text-left text-sm transition-all duration-150 ease-out
-                shadow-sm
-                ${isSelected
-                                    ? "bg-brand-orange-soft text-brand-orange border-brand-orange"
-                                    : "bg-surface text-text-main border-border-soft hover:bg-surface-soft hover:-translate-y-[1px]"
-                                }
-              `}
-                        >
-                            {new Date(slot.start).toLocaleString("en-GB", {
-                                weekday: "short",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                day: "2-digit",
-                                month: "short",
-                            })}
-                        </button>
-                    );
-                })}
-            </div>
+        <div className="space-y-6">
+            {Object.entries(groups).map(([day, daySlots]) => (
+                <SlotDayGroup
+                    key={day}
+                    day={day}
+                    slots={daySlots}
+                    selectedSlot={selectedSlot}
+                    onSelectSlot={onSelectSlot}
+                />
+            ))}
 
             <p className="text-xs text-text-soft">
-                Placeholder: these slots will later be linked to the actual booking submission.
+                Select a slot to continue with your booking.
             </p>
         </div>
     );

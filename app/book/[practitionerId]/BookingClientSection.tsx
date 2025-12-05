@@ -25,8 +25,9 @@ export function BookingClientSection({
 }: BookingClientSectionProps) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
-  function handleSelectSlot(slot: Slot) {
-    setSelectedSlot(slot.start);
+  function handleSelectSlot(slot: Slot | null) {
+    // permite que o picker envie `null` para desmarcar (toggle off)
+    setSelectedSlot(slot ? slot.start : null);
   }
 
   return (

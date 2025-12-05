@@ -414,6 +414,22 @@ export function BookingForm({
                 </div>
             </div>
 
+            {selectedSlot && (
+                <div className="p-3 rounded-md bg-surface-soft border border-border-soft text-sm text-text-main">
+                    <p className="font-medium">Selected time:</p>
+                    <p className="text-brand-orange font-semibold">
+                        {new Date(selectedSlot).toLocaleString("en-GB", {
+                            weekday: "long",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            day: "2-digit",
+                            month: "short",
+                        })}
+                    </p>
+                </div>
+            )}
+
+
             {/* Security + error */}
             <div className="space-y-2 text-xs text-text-soft">
                 <p>🔒 Your information is secure and will only be shared with your practitioner.</p>
@@ -436,7 +452,10 @@ export function BookingForm({
   */}
                 <button
                     type="submit"
-                    className="hg-btn-primary w-full justify-center"
+                    className={`
+                        hg-btn-primary w-full justify-center
+                        ${!selectedSlot ? "opacity-50 cursor-not-allowed" : ""}
+                    `}
                     disabled={isSubmitting || (slotsAvailable && !selectedSlot)}
                 >
                     {isSubmitting
