@@ -1,65 +1,69 @@
 "use client";
 
 export type Slot = {
-  start: string; // ISO datetime
+    start: string; // ISO datetime
 };
 
 type AvailabilityPickerProps = {
-  slots: Slot[];
-  selectedSlot: string | null;
-  onSelectSlot: (slot: Slot) => void;
+    slots: Slot[];
+    selectedSlot: string | null;
+    /**
+     * Chamado quando o usuário clica em um slot.
+     * Quando o mesmo slot é clicado novamente, mandamos null (toggle off).
+     */
+    onSelectSlot: (slot: Slot | null) => void;
 };
 
 export function AvailabilityPicker({
-  slots,
-  selectedSlot,
-  onSelectSlot,
+    slots,
+    selectedSlot,
+    onSelectSlot,
 }: AvailabilityPickerProps) {
-  // Caso não haja slots
-  if (!slots || slots.length === 0) {
+    // Caso não haja slots
+    if (!slots || slots.length === 0) {
+        return (
+            <p className="text-sm text-text-muted">
+                No slots available for the next 14 days. This message is a placeholder.
+            </p>
+        );
+    }
+
     return (
-      <p className="text-sm text-text-muted">
-        No slots available for the next 14 days. This message is a placeholder.
-      </p>
-    );
-  }
+        <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+                {slots.slice(0, 8).map((slot) => {
+                    const isSelected = selectedSlot === slot.start;
 
-  return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 gap-2">
-        {slots.slice(0, 8).map((slot) => {
-          const isSelected = selectedSlot === slot.start;
-
-          return (
-            <button
-              key={slot.start}
-              type="button"
-              onClick={() => onSelectSlot(slot)}
-              className={`
+                    return (
+                        <button
+                            key={slot.start}
+                            type="button"
+                            onClick={() => onSelectSlot(isSelected ? null : slot)}
+                            aria-pressed={isSelected}
+                            className={`
                 w-full rounded-lg border px-3 py-2 text-left text-sm transition-all duration-150 ease-out
                 shadow-sm
-                ${
-                  isSelected
-                    ? "bg-brand-orange-soft text-brand-orange border-brand-orange"
-                    : "bg-surface text-text-main border-border-soft hover:bg-surface-soft hover:-translate-y-[1px]"
-                }
+                ${isSelected
+                                    ? "bg-brand-orange-soft text-brand-orange border-brand-orange"
+                                    : "bg-surface text-text-main border-border-soft hover:bg-surface-soft hover:-translate-y-[1px]"
+                                }
               `}
-            >
-              {new Date(slot.start).toLocaleString("en-GB", {
-                weekday: "short",
-                hour: "2-digit",
-                minute: "2-digit",
-                day: "2-digit",
-                month: "short",
-              })}
-            </button>
-          );
-        })}
-      </div>
+                        >
+                            {new Date(slot.start).toLocaleString("en-GB", {
+                                weekday: "short",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                day: "2-digit",
+                                month: "short",
+                            })}
+                        </button>
+                    );
+                })}
+            </div>
 
-      <p className="text-xs text-text-soft">
-        Placeholder: these slots will later be linked to the actual booking submission.
-      </p>
-    </div>
-  );
+            <p className="text-xs text-text-soft">
+                Placeholder: these slots will later be linked to the actual booking submission.
+            </p>
+        </div>
+    );
 }

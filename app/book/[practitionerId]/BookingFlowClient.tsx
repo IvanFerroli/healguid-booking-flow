@@ -19,7 +19,11 @@ export function BookingFlowClient({ practitionerId, slots }: BookingFlowClientPr
             {/* LEFT – FORM */}
             <section className="space-y-6">
                 <div className="hg-card">
-                    <BookingForm practitionerId={practitionerId} selectedSlot={selectedSlot} />
+                    <BookingForm
+                        practitionerId={practitionerId}
+                        selectedSlot={selectedSlot}
+                        slotsAvailable={slots.length > 0}
+                    />
                 </div>
             </section>
 
@@ -29,14 +33,18 @@ export function BookingFlowClient({ practitionerId, slots }: BookingFlowClientPr
                     <h2 className="text-xl font-semibold mb-2">Choose a time</h2>
 
                     <p className="text-sm text-text-muted mb-4">
-                        Select an available slot to continue your booking.
+                        {slots.length > 0
+                            ? "Select an available slot to continue your booking."
+                            : "No live times are currently available, but you can still request a consultation and we’ll follow up to arrange a time."}
                     </p>
 
-                    <AvailabilityPicker
-                        slots={slots}
-                        selectedSlot={selectedSlot}
-                        onSelectSlot={(slot: Slot) => setSelectedSlot(slot.start)}
-                    />
+                    {slots.length > 0 && (
+                        <AvailabilityPicker
+                            slots={slots}
+                            selectedSlot={selectedSlot}
+                            onSelectSlot={(slot) => setSelectedSlot(slot ? slot.start : null)}
+                        />
+                    )}
 
                 </div>
 

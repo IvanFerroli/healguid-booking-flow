@@ -30,8 +30,12 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 type BookingFormProps = {
     practitionerId: number;
     selectedSlot?: string | null;
+    /**
+     * Se true (default), o formulário exige um horário selecionado.
+     * Se false, permite enviar mesmo sem slot (ex: quando não há availability vinda do provider).
+     */
+    slotsAvailable?: boolean;
 };
-
 
 const bookingResolver: Resolver<BookingFormValues> = async (
     values,
@@ -96,7 +100,12 @@ const START_TIMELINE_OPTIONS = [
     "Just exploring options",
 ];
 
-export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) {
+export function BookingForm({
+    practitionerId,
+    selectedSlot,
+    slotsAvailable = true,
+}: BookingFormProps) {
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -117,15 +126,21 @@ export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) 
         setIsSubmitting(true);
         setSubmitError(null);
 
-        // Garantia extra: não deixa enviar sem slot
-        if (!selectedSlot) {
+        // Se houver slots disponíveis, exigir seleção
+        if (slotsAvailable && !selectedSlot) {
             setSubmitError("Please select a time slot before continuing.");
             setIsSubmitting(false);
             return;
         }
 
         try {
-            const slotIso = selectedSlot!; // garantido pelo if acima
+            // Se há slots disponíveis, usamos o selecionado.
+            // Se NÃO há slots (slotsAvailable === false), por enquanto mandamos "now"
+            // como placeholder; depois dá pra trocar para "unscheduled" no backend.
+            const slotIso =
+                slotsAvailable && selectedSlot
+                    ? selectedSlot
+                    : new Date().toISOString();
 
             const response = await fetch("/api/bookings", {
                 method: "POST",
@@ -414,23 +429,41 @@ export function BookingForm({ practitionerId, selectedSlot }: BookingFormProps) 
 
             {/* Submit */}
             <div className="pt-2">
+                {/*
+    Desabilita o botão apenas se:
+    - está submetendo, ou
+    - existem slots disponíveis E nenhum foi selecionado
+  */}
                 <button
                     type="submit"
                     className="hg-btn-primary w-full justify-center"
-                    disabled={isSubmitting || !selectedSlot}
+                    disabled={isSubmitting || (slotsAvailable && !selectedSlot)}
                 >
                     {isSubmitting
                         ? "Redirecting to checkout..."
-                        : selectedSlot
-                            ? "Request Consultation"
-                            : "Select a time to continue"}
+                        : slotsAvailable
+                            ? selectedSlot
+                                ? "Request Consultation"
+                                : "Select a time to continue"
+                            : "Request Consultation"}
                 </button>
-                {!selectedSlot && !isSubmitting && (
+
+                {/* Mensagem de ajuda só faz sentido se existem slots */}
+                {slotsAvailable && !selectedSlot && !isSubmitting && (
                     <p className="mt-2 text-xs text-text-soft text-center">
                         Select an available time on the right to enable your booking.
                     </p>
                 )}
+
+                {/* Quando NÃO há slots, dá pra adicionar uma nota suave opcional */}
+                {!slotsAvailable && !isSubmitting && (
+                    <p className="mt-2 text-xs text-text-soft text-center">
+                        No live times are available right now, but you can still request a
+                        consultation and we&apos;ll follow up to schedule a time.
+                    </p>
+                )}
             </div>
+
         </form>
     );
 }
