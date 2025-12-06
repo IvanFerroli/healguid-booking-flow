@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { BookingClientSection } from "./BookingClientSection";
+export const dynamic = "force-dynamic"; // garante que a página pode mostrar loading real
 
 
 type PageProps = {
@@ -87,11 +88,12 @@ export default async function Page({ params }: PageProps) {
         );
     }
 
-    // -------------------------------------
-    // 3) Buscar availability na API interna (server-side)
-    //    - por enquanto, só para exibir slots desabilitados
-    // -------------------------------------
-    async function fetchAvailability() {
+    type AvailabilityResult = {
+        mode: "live" | "fallback" | "error";
+        slots: { start: string }[];
+    };
+
+    async function fetchAvailability(): Promise<AvailabilityResult> {
         try {
             const baseUrl =
                 process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
@@ -102,37 +104,37 @@ export default async function Page({ params }: PageProps) {
             );
 
             if (!res.ok) {
-                return { error: true, slots: [] };
+                return { mode: "error", slots: [] };
             }
 
-            return res.json();
+            const data = await res.json();
+
+            return {
+                mode: "live",
+                slots: Array.isArray(data.slots) ? data.slots : [],
+            };
         } catch (err) {
             console.error("[book/page] availability error:", err);
-            return { error: true, slots: [] };
+            return { mode: "error", slots: [] };
         }
     }
 
-    // const availability = await fetchAvailability();
-    // const slots = Array.isArray(availability.slots) ? availability.slots : [];
-    // const availabilityError = !!availability.error;
-
     const availability = await fetchAvailability();
 
-    let slots = Array.isArray(availability.slots) ? availability.slots : [];
-    let availabilityError = !!availability.error;
+    let slots = availability.slots;
+    let availabilityMode = availability.mode;
 
-    // Fallback temporário: se deu erro e não veio slot nenhum,
-    // gera alguns slots fake só pra validar a UX da seleção.
-    if (availabilityError && slots.length === 0) {
+    // Fallback temporário: ainda queremos UX funcional mesmo quando API falha
+    if (availabilityMode === "error" && slots.length === 0) {
         const now = new Date();
 
         slots = Array.from({ length: 6 }).map((_, i) => ({
             start: new Date(
-                now.getTime() + (i + 1) * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000 // próximos dias às 14:00
+                now.getTime() + (i + 1) * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000
             ).toISOString(),
         }));
 
-        availabilityError = false; // trata fallback como "ok" pro front
+        availabilityMode = "fallback"; // <-- chave do sucesso
     }
 
 
@@ -171,7 +173,7 @@ export default async function Page({ params }: PageProps) {
                     </div>
                 </header>
 
-                {availabilityError && (
+                {availabilityMode === "error" && (
                     <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
                         We&apos;re temporarily unable to sync live availability, so the times shown
                         below are example slots for now.
@@ -183,8 +185,9 @@ export default async function Page({ params }: PageProps) {
                 <BookingClientSection
                     practitioner={practitioner}
                     slots={slots}
-                    availabilityError={availabilityError}
+                    availabilityError={availabilityMode === "error"}
                 />
+
 
 
                 {/* SEÇÕES INFERIORES - PLACEHOLDERS SIMPLES */}
