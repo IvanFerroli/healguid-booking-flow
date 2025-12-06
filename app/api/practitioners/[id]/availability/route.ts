@@ -4,9 +4,9 @@ import { fetchCalAvailability } from "@/lib/calClient";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await context.params;
 
 
   try {
