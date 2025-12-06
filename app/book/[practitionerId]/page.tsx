@@ -67,29 +67,6 @@ export default async function Page({ params }: PageProps) {
         );
     }
 
-    // -------------------------------------
-    // 2) Tratamento: practitioner inexistente
-    // -------------------------------------
-    if (!practitioner) {
-        return (
-            <div className="min-h-screen px-6 py-10 max-w-3xl mx-auto">
-                <h1 className="text-3xl font-bold mb-4 text-red-600">
-                    Practitioner not found
-                </h1>
-                <p className="text-gray-700">
-                    The practitioner with ID {id} does not exist.
-                </p>
-
-                <a
-                    href="/"
-                    className="inline-block mt-6 px-4 py-2 bg-blue-600 text-white rounded-md"
-                >
-                    Return to home
-                </a>
-            </div>
-        );
-    }
-
     type AvailabilityResult = {
         mode: "live" | "fallback" | "error";
         slots: { start: string }[];
@@ -149,7 +126,7 @@ export default async function Page({ params }: PageProps) {
     // -------------------------------------
     return (
         <div className="min-h-screen bg-page-cream px-4 py-10">
-            <main className="hg-section space-y-10">
+            <main className="hg-section space-y-12">
                 {/* HEADER / HERO */}
                 <header className="space-y-3">
                     {/* Breadcrumb simples */}
@@ -166,23 +143,28 @@ export default async function Page({ params }: PageProps) {
                         </h1>
 
                         <p className="text-sm text-text-muted max-w-2xl">
-                            Placeholder copy: short paragraph explaining that you&apos;re
-                            requesting a consultation with a HealGuid practitioner and what
-                            typically happens next. This will be refined later to match the
-                            real page.
+                            You’re requesting a consultation with a HealGuid practitioner. After you send
+                            your details, we’ll help match you with the most suitable support based on
+                            your goals and preferences.
                         </p>
 
+
                         <p className="text-xs text-text-soft">
-                            Placeholder: trust badges line (e.g. evidence-based, vetted
-                            practitioners, data-secure). To be refined later.
+                            Evidence-based · Vetted practitioners · Secure and confidential
                         </p>
+
                     </div>
                 </header>
 
                 {availabilityMode === "error" && (
-                    <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
-                        We&apos;re temporarily unable to sync live availability, so the times shown
-                        below are example slots for now.
+                    <p className="text-sm text-red-500">
+                        Unable to load live availability at the moment.
+                    </p>
+                )}
+
+                {availabilityMode === "fallback" && (
+                    <p className="text-sm text-amber-600">
+                        Showing example times while we reconnect to the provider.
                     </p>
                 )}
 

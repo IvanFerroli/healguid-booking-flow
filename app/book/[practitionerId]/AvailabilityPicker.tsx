@@ -27,7 +27,7 @@ export function AvailabilityPicker({
     if (!slots || slots.length === 0) {
         return (
             <p className="text-sm text-text-muted">
-                No slots available for the next 14 days. This message is a placeholder.
+                This practitioner has no available times right now. You can still request a consultation, and we’ll follow up to schedule your session.
             </p>
         );
     }

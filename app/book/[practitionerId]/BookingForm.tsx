@@ -31,10 +31,12 @@ type BookingFormProps = {
     practitionerId: number;
     selectedSlot?: string | null;
     /**
-     * Se true (default), o formulário exige um horário selecionado.
-     * Se false, permite enviar mesmo sem slot (ex: quando não há availability vinda do provider).
+     * Modo de disponibilidade vindo do servidor:
+     * - "live": horários reais (exigir slot)
+     * - "fallback": horários de exemplo (ideal exigir, mas OK se não)
+     * - "error": erro ao carregar disponibilidade (não exigir slot)
      */
-    slotsAvailable?: boolean;
+    availabilityMode?: "live" | "fallback" | "error";
 };
 
 const bookingResolver: Resolver<BookingFormValues> = async (
@@ -103,8 +105,11 @@ const START_TIMELINE_OPTIONS = [
 export function BookingForm({
     practitionerId,
     selectedSlot,
-    slotsAvailable = true,
+    availabilityMode = "live",
 }: BookingFormProps) {
+
+    const slotRequired =
+        availabilityMode === "live" || availabilityMode === "fallback";
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
@@ -126,21 +131,17 @@ export function BookingForm({
         setIsSubmitting(true);
         setSubmitError(null);
 
-        // Se houver slots disponíveis, exigir seleção
-        if (slotsAvailable && !selectedSlot) {
+        // Se o modo exigir slot, exigir seleção
+        if (slotRequired && !selectedSlot) {
             setSubmitError("Please select a time slot before continuing.");
             setIsSubmitting(false);
             return;
         }
 
         try {
-            // Se há slots disponíveis, usamos o selecionado.
-            // Se NÃO há slots (slotsAvailable === false), por enquanto mandamos "now"
-            // como placeholder; depois dá pra trocar para "unscheduled" no backend.
-            const slotIso =
-                slotsAvailable && selectedSlot
-                    ? selectedSlot
-                    : new Date().toISOString();
+            // Se o modo exige slot, usamos o selecionado.
+            // Se NÃO (error), mandamos um placeholder (now) e o backend decide o que fazer.
+            const slotIso = slotRequired && selectedSlot ? selectedSlot : new Date().toISOString();
 
             const response = await fetch("/api/bookings", {
                 method: "POST",
@@ -453,29 +454,29 @@ export function BookingForm({
                 <button
                     type="submit"
                     className={`
-                        hg-btn-primary w-full justify-center
-                        ${!selectedSlot ? "opacity-50 cursor-not-allowed" : ""}
-                    `}
-                    disabled={isSubmitting || (slotsAvailable && !selectedSlot)}
+                            hg-btn-primary w-full justify-center
+                            ${!selectedSlot ? "opacity-50 cursor-not-allowed" : ""}
+                        `}
+                        disabled={isSubmitting || (slotRequired && !selectedSlot)}
                 >
                     {isSubmitting
                         ? "Redirecting to checkout..."
-                        : slotsAvailable
-                            ? selectedSlot
-                                ? "Request Consultation"
-                                : "Select a time to continue"
-                            : "Request Consultation"}
+                            : slotRequired
+                                ? selectedSlot
+                                    ? "Request Consultation"
+                                    : "Select a time to continue"
+                                : "Request Consultation"}
                 </button>
 
                 {/* Mensagem de ajuda só faz sentido se existem slots */}
-                {slotsAvailable && !selectedSlot && !isSubmitting && (
+                {slotRequired && !selectedSlot && !isSubmitting && (
                     <p className="mt-2 text-xs text-text-soft text-center">
                         Select an available time on the right to enable your booking.
                     </p>
                 )}
 
                 {/* Quando NÃO há slots, dá pra adicionar uma nota suave opcional */}
-                {!slotsAvailable && !isSubmitting && (
+                {!slotRequired && !isSubmitting && (
                     <p className="mt-2 text-xs text-text-soft text-center">
                         No live times are available right now, but you can still request a
                         consultation and we&apos;ll follow up to schedule a time.

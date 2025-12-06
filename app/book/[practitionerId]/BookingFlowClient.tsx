@@ -22,13 +22,13 @@ export function BookingFlowClient({ practitionerId, slots }: BookingFlowClientPr
                     <BookingForm
                         practitionerId={practitionerId}
                         selectedSlot={selectedSlot}
-                        slotsAvailable={slots.length > 0}
+                        availabilityMode={slots.length > 0 ? "live" : "error"}
                     />
                 </div>
             </section>
 
             {/* RIGHT – AVAILABILITY */}
-            <aside className="space-y-4">
+            <aside className="space-y-6">
                 <div className="hg-card">
                     <h2 className="text-xl font-semibold mb-2">Choose a time</h2>
 
