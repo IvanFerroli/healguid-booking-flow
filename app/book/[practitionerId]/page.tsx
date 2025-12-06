@@ -3,6 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { BookingClientSection } from "./BookingClientSection";
 export const dynamic = "force-dynamic"; // garante que a página pode mostrar loading real
+import { Suspense } from "react";
+import { LoadingAvailability } from "./LoadingAvailability";
 
 
 type PageProps = {
@@ -119,6 +121,10 @@ export default async function Page({ params }: PageProps) {
         }
     }
 
+    // artificial delay para simular loading real
+    await new Promise((r) => setTimeout(r, 400));
+
+
     const availability = await fetchAvailability();
 
     let slots = availability.slots;
@@ -182,11 +188,16 @@ export default async function Page({ params }: PageProps) {
 
 
                 {/* MAIN GRID: LEFT (info + form) / RIGHT (availability) */}
-                <BookingClientSection
-                    practitioner={practitioner}
-                    slots={slots}
-                    availabilityError={availabilityMode === "error"}
-                />
+                <Suspense fallback={<LoadingAvailability />}>
+                    <BookingClientSection
+                        practitioner={practitioner}
+                        slots={slots}
+                        availabilityError={availabilityMode === "error"}
+                        availabilityMode={availabilityMode}
+                    />
+                </Suspense>
+
+
 
 
 
