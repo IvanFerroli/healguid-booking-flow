@@ -15,7 +15,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { practitionerId, slot, name, email, phone } = body || {};
 
-    // Basic payload validation
     if (!practitionerId || !slot || !name || !email || !phone) {
       return NextResponse.json(
         {
@@ -53,7 +52,7 @@ export async function POST(req: Request) {
         "[bookings] Skipping slot revalidation due to Cal.com error:",
         err
       );
-      // TODO: in production, enforce slot validation when Cal.com is stable
+    
     }
 
     if (!isSlotValid) {
@@ -67,7 +66,7 @@ export async function POST(req: Request) {
     }
 
 
-    // Create booking in pending state
+
     const booking = await prisma.booking.create({
       data: {
         practitionerId: practitioner.id,
@@ -81,7 +80,7 @@ export async function POST(req: Request) {
 
     bookingId = booking.id;
 
-    // Create Stripe Checkout Session
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [
@@ -104,11 +103,24 @@ export async function POST(req: Request) {
     });
 
 
-    // Save stripeSessionId
+    try {
+      console.log("[bookings] Stripe session created:", { id: session.id, metadata: session.metadata });
+    } catch (logErr) {
+      console.error("[bookings] Failed to log Stripe session:", logErr);
+    }
+
+
     await prisma.booking.update({
       where: { id: booking.id },
       data: { stripeSessionId: session.id },
     });
+
+
+    try {
+      console.log("[bookings] Saved stripeSessionId for booking", { bookingId: booking.id, stripeSessionId: session.id });
+    } catch (logErr) {
+      console.error("[bookings] Failed to log DB update:", logErr);
+    }
 
     if (!session.url) {
       return NextResponse.json(
@@ -127,7 +139,6 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("[bookings] Error:", err);
 
-    // If Stripe failed after booking was created, mark as failed
     if (bookingId) {
       try {
         await prisma.booking.update({

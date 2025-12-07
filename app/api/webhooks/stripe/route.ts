@@ -2,16 +2,12 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 
-
-// ❗ App Router não usa export const config
-// usamos runtime para permitir raw body
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// helper para pegar raw body corretamente
 async function getRawBody(req: Request): Promise<Buffer> {
     const arrayBuffer = await req.arrayBuffer();
     return Buffer.from(arrayBuffer);
@@ -46,13 +42,9 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    // -------------------------------
-    // checkout.session.completed
-    // -------------------------------
     if (event.type === "checkout.session.completed") {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        // 🔐 1. Payment must be successful
         if (session.payment_status !== "paid") {
             console.log(
                 "[webhook] Session completed but payment not paid. Status:",
@@ -61,21 +53,33 @@ export async function POST(req: Request) {
             return NextResponse.json({ ok: true });
         }
 
-        // 🔍 2. Extract bookingId
-        const bookingId = session.metadata?.bookingId;
+        let bookingId = session.metadata?.bookingId;
 
-        if (!bookingId) {
-            console.error("[webhook] Missing bookingId");
-            return NextResponse.json({ ok: true });
+
+        let booking = null as any;
+
+        if (bookingId) {
+            booking = await prisma.booking.findUnique({ where: { id: Number(bookingId) } });
+            if (!booking) {
+                console.error("[webhook] Booking not found by metadata bookingId:", bookingId);
+            }
         }
 
-        // 🔄 3. Idempotência
-        const booking = await prisma.booking.findUnique({
-            where: { id: Number(bookingId) },
-        });
+        if (!booking) {
+            console.log("[webhook] metadata.bookingId missing or lookup failed, trying stripeSessionId lookup (session.id)");
+            try {
+                booking = await prisma.booking.findFirst({ where: { stripeSessionId: session.id } });
+                if (booking) {
+                    bookingId = String(booking.id);
+                    console.log("[webhook] Found booking by stripeSessionId:", bookingId);
+                }
+            } catch (lookupErr) {
+                console.error("[webhook] stripeSessionId lookup error:", lookupErr);
+            }
+        }
 
         if (!booking) {
-            console.error("[webhook] Booking not found:", bookingId);
+            console.error("[webhook] Booking not found (metadata and stripeSessionId lookup both failed)");
             return NextResponse.json({ ok: true });
         }
 
@@ -84,7 +88,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ ok: true });
         }
 
-        // ✅ 4. Confirm booking
         await prisma.booking.update({
             where: { id: booking.id },
             data: { status: "confirmed" },

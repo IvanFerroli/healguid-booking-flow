@@ -4,7 +4,7 @@ import { groupSlotsByDay } from "./utils/slotUtils";
 import { SlotDayGroup } from "./SlotDayGroup";
 
 export type Slot = {
-    start: string; // ISO datetime
+    start: string; 
 };
 
 type AvailabilityPickerProps = {
@@ -23,7 +23,6 @@ export function AvailabilityPicker({
     onSelectSlot,
 }: AvailabilityPickerProps) {
     const groups = groupSlotsByDay(slots);
-    // Caso não haja slots
     if (!slots || slots.length === 0) {
         return (
             <p className="text-sm text-text-muted">

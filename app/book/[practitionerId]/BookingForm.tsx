@@ -44,14 +44,13 @@ const bookingResolver: Resolver<BookingFormValues> = async (
     context,
     options
 ) => {
-    // Usa o zodResolver original
+
     const baseResolver = zodResolver(bookingSchema);
 
     try {
         return await baseResolver(values, context, options);
     } catch (err) {
-        // Se por algum motivo o resolver ainda jogar um ZodError pra fora,
-        // convertemos manualmente em errors do RHF em vez de explodir na tela.
+
         if (err instanceof z.ZodError) {
             const fieldErrors = err.issues.reduce((all, issue) => {
                 const pathKey = issue.path[0] as keyof BookingFormValues | undefined;
@@ -72,7 +71,6 @@ const bookingResolver: Resolver<BookingFormValues> = async (
             };
         }
 
-        // Se não for ZodError, deixa estourar (erro real de código)
         throw err;
     }
 };
@@ -121,7 +119,7 @@ export function BookingForm({
     } = useForm<BookingFormValues>({
         resolver: bookingResolver,
         defaultValues: {
-            // não força consultationPreference aqui
+
             bestTimes: [],
         },
     });
@@ -131,7 +129,6 @@ export function BookingForm({
         setIsSubmitting(true);
         setSubmitError(null);
 
-        // Se o modo exigir slot, exigir seleção
         if (slotRequired && !selectedSlot) {
             setSubmitError("Please select a time slot before continuing.");
             setIsSubmitting(false);
@@ -139,8 +136,7 @@ export function BookingForm({
         }
 
         try {
-            // Se o modo exige slot, usamos o selecionado.
-            // Se NÃO (error), mandamos um placeholder (now) e o backend decide o que fazer.
+
             const slotIso = slotRequired && selectedSlot ? selectedSlot : new Date().toISOString();
 
             const response = await fetch("/api/bookings", {

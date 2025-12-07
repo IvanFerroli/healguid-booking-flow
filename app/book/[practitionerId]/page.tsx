@@ -1,23 +1,18 @@
-// app/book/[practitionerId]/page.tsx
-
 import { prisma } from "@/lib/prisma";
 import { BookingClientSection } from "./BookingClientSection";
-export const dynamic = "force-dynamic"; // garante que a página pode mostrar loading real
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import { LoadingAvailability } from "./LoadingAvailability";
 
 
 type PageProps = {
-    params: Promise<{ practitionerId: string }>; // <- params é Promise
+    params: Promise<{ practitionerId: string }>;
 };
 
 export default async function Page({ params }: PageProps) {
-    // 🔥 Necessário no Next 16 / Turbopack
+
     const { practitionerId } = await params;
 
-    // -------------------------------------
-    // Normaliza o ID
-    // -------------------------------------
     const id = Number(practitionerId);
 
     if (!Number.isInteger(id) || id <= 0) {
@@ -40,9 +35,6 @@ export default async function Page({ params }: PageProps) {
         );
     }
 
-    // -------------------------------------
-    // Busca o practitioner
-    // -------------------------------------
     const practitioner = await prisma.practitioner.findUnique({
         where: { id },
     });
@@ -98,7 +90,6 @@ export default async function Page({ params }: PageProps) {
         }
     }
 
-    // artificial delay para simular loading real
     await new Promise((r) => setTimeout(r, 400));
 
 
@@ -107,7 +98,6 @@ export default async function Page({ params }: PageProps) {
     let slots = availability.slots;
     let availabilityMode = availability.mode;
 
-    // Fallback temporário: ainda queremos UX funcional mesmo quando API falha
     if (availabilityMode === "error" && slots.length === 0) {
         const now = new Date();
 
@@ -117,13 +107,9 @@ export default async function Page({ params }: PageProps) {
             ).toISOString(),
         }));
 
-        availabilityMode = "fallback"; // <-- chave do sucesso
+        availabilityMode = "fallback";
     }
 
-
-    // -------------------------------------
-    // 4) Layout HealGuid-like com placeholders
-    // -------------------------------------
     return (
         <div className="min-h-screen bg-page-cream px-4 py-10">
             <main className="hg-section space-y-12">

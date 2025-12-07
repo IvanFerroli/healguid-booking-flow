@@ -4,7 +4,7 @@ import { formatSlotShort, formatDayHeader } from "./utils/slotUtils";
 import type { Slot } from "./types";
 
 type Props = {
-  day: string; // YYYY-MM-DD
+  day: string; 
   slots: Slot[];
   selectedSlot: string | null;
   onSelectSlot: (slot: Slot) => void;

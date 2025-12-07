@@ -1,77 +1,198 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+const DEFAULT_IMG =
+  "https://softr-tables-eu-prod-bucket02.s3.eu-central-1.amazonaws.com/attachments/c831b56d-e5a0-4e54-b44e-1ef030a4fd0b/IBJ24lsZ6ZO3Ad/acebb7f2-1e03-4f42-aa8e-0d25ca5edf1b/f11eef11-4d79-4555-aefa-0be5a3674ab8";
+
 async function main() {
   console.log("🌱 Seeding practitioners...");
 
-  // 1) Apagar bookings primeiro (FK)
   await prisma.booking.deleteMany();
-
-  // 2) Agora sim apagar practitioners
   await prisma.practitioner.deleteMany();
 
-  // 3) Criar practitioners ricos
-  await prisma.practitioner.createMany({
-    data: [
-      {
-        name: "Dr. Emily Carter",
-        specialty: "Functional Medicine • Gut Health",
-        description:
-          "Specialist in gut microbiome, detox pathways, and inflammatory markers. Uses advanced testing to optimize digestive function and restore metabolic balance.",
-        eventTypeId: "evt_emily_gut_01",
-        basePrice: 95,
-      },
-      {
-        name: "Dr. Daniel Hughes",
-        specialty: "Integrative Nutrition • Metabolic Health",
-        description:
-          "Focuses on insulin sensitivity, micronutrient analysis, and sustainable weight management. Strong emphasis on lifestyle interventions and metabolic repair.",
-        eventTypeId: "evt_daniel_metabolic_01",
-        basePrice: 85,
-      },
-      {
-        name: "Dr. Sofia Bennett",
-        specialty: "Women's Health • Hormonal Optimization",
-        description:
-          "Expert in PMS, menopause transition, PCOS, and low estrogen states. Provides evidence-based protocols for endocrine balance and long-term vitality.",
-        eventTypeId: "evt_sofia_hormones_01",
-        basePrice: 120,
-      },
-      {
-        name: "Dr. Lucas Ward",
-        specialty: "Sleep Medicine • Circadian Rhythm",
-        description:
-          "Works with sleep dysregulation, chronic fatigue, and circadian misalignment. Incorporates behavioral strategies and biofeedback-driven optimization.",
-        eventTypeId: "evt_lucas_sleep_01",
-        basePrice: 110,
-      },
-      {
-        name: "Dr. Hannah Stone",
-        specialty: "Autoimmune Conditions • Inflammation",
-        description:
-          "Treats systemic inflammation, Hashimoto’s, rheumatoid arthritis, and chronic immune activation. Uses functional testing to personalize recovery protocols.",
-        eventTypeId: "evt_hannah_autoimmune_01",
-        basePrice: 130,
-      },
-      {
-        name: "Dr. Marcus Hale",
-        specialty: "Longevity • Performance Medicine",
-        description:
-          "Combines biomarker-driven longevity strategies with performance enhancement. Works with cardiovascular risk reduction, mitochondrial efficiency, and aging pathways.",
-        eventTypeId: "evt_marcus_longevity_01",
-        basePrice: 150,
-      },
-    ],
-  });
+  const practitioners = [
+    {
+      name: "Benjamin R.",
+      title: "Nutritional Therapist",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Performance-focused nutrition specialist helping clients improve sleep, stress resilience and metabolic health.",
+      longBio: `I'm Benjamin, a qualified, regulated, performance-focused nutrition & lifestyle medicine practitioner with a strong focus on enhancing healthspan, body composition, sleep and stress.
 
-  console.log("🌱 Seed completed successfully.");
+Shaped by your priorities, enablers and constraints, we co-create a personalised, science-based, actionable programme. I act as your strategist, your coach to implement high-value interventions, and your educator on the “why”.`,
+      tags: ["Hormonal Imbalances", "Sleep & Stress Management", "Health Optimization"],
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: ["English"],
+      experienceYears: 2,
+      hourlyRate: 80,
+      satisfactionScore: 5.0,
+      successfulSessions: "Recently joined HealGuid",
+      memberSince: new Date("2025-09-17"),
+      professionalAssociations: [
+        "BANT (British Association for Nutrition and Lifestyle Medicine)",
+        "CNHC (Complementary and Natural Healthcare Council)",
+      ],
+      eventTypeId: "evt_benjamin_01",
+      basePrice: 80,
+    },
+
+    {
+      name: "Christelle S.",
+      title: "Functional Medicine Practitioner",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Helps patients uncover root causes through whole-person functional medicine and personalised investigation.",
+      longBio: `I help people who feel lost in the healthcare system finally understand the root causes of their symptoms. My approach combines deep listening, detailed investigation and realistic treatment plans that empower each patient.`,
+      tags: ["Gut Health", "Inflammation", "Women's Health"],
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: ["English", "French"],
+      experienceYears: 6,
+      hourlyRate: 110,
+      satisfactionScore: 4.9,
+      successfulSessions: "Over 300 successful sessions",
+      memberSince: new Date("2024-03-01"),
+      professionalAssociations: ["IFM (Institute for Functional Medicine)"],
+      eventTypeId: "evt_christelle_01",
+      basePrice: 110,
+    },
+
+    {
+      name: "Dr. Ayiesha M.",
+      title: "Integrative Medicine Practitioner",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "GP specialising in Functional Medicine for hormonal, metabolic and chronic inflammatory conditions.",
+      longBio: `As a GP, I saw firsthand how symptom-based medicine fails complex chronic cases. I use Functional Medicine to understand hormonal, metabolic and gut-driven imbalances, helping patients reclaim their energy and long-term wellness.`,
+      tags: ["Hormones", "Gut Health", "Chronic Illness"],
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: ["English"],
+      experienceYears: 10,
+      hourlyRate: 150,
+      satisfactionScore: 4.8,
+      successfulSessions: "Over 500 sessions completed",
+      memberSince: new Date("2023-07-15"),
+      professionalAssociations: ["GMC", "IFM Certified"],
+      eventTypeId: "evt_ayiesha_01",
+      basePrice: 150,
+    },
+
+    {
+      name: "Ignacio G.",
+      title: "Osteopathic Practitioner",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Former athlete helping patients overcome chronic pain through osteopathy, breathwork and movement.",
+      longBio: `After a career-ending back injury, I discovered osteopathy's power to restore mobility and reduce pain without surgery. I help patients break free from chronic pain cycles using hands-on treatment and targeted movement strategies.`,
+      tags: ["Chronic Pain", "Musculoskeletal Health", "Breathwork"],
+      country: "United States",
+      consultationType: "In-person",
+      languages: ["English", "Spanish"],
+      experienceYears: 12,
+      hourlyRate: 140,
+      satisfactionScore: 4.7,
+      successfulSessions: "Thousands of sessions over 12 years",
+      memberSince: new Date("2020-02-10"),
+      professionalAssociations: ["American Osteopathic Association"],
+      eventTypeId: "evt_ignacio_01",
+      basePrice: 140,
+    },
+
+    {
+      name: "Ines J.",
+      title: "Nutritional Therapist",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Registered dietitian specialising in digestive issues, women's health, burnout and fatigue.",
+      longBio: `My approach is deeply personalised and grounded in science and compassion. I help patients uncover root causes behind digestive issues, hormonal imbalance, chronic stress and unexplained fatigue—creating sustainable, realistic plans.`,
+      tags: ["Digestion", "Women's Health", "Autoimmunity"],
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: ["English", "Portuguese"],
+      experienceYears: 7,
+      hourlyRate: 100,
+      satisfactionScore: 5.0,
+      successfulSessions: "Highly requested practitioner",
+      memberSince: new Date("2024-11-12"),
+      professionalAssociations: ["HCPC", "BDA"],
+      eventTypeId: "evt_ines_01",
+      basePrice: 100,
+    },
+
+    {
+      name: "Jonas M.",
+      title: "Integrative Medicine Practitioner",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Chronic fatigue and post-viral recovery specialist using nutrigenomics and mind-body strategies.",
+      longBio: `I treat post-viral fatigue, long COVID and chronic exhaustion using a combination of nutrigenomics, mitochondrial support and behavioural techniques. Patients appreciate my structured, data-driven approach.`,
+      tags: ["Chronic Fatigue", "Post-Viral Recovery", "Mitochondrial Health"],
+      country: "Germany",
+      consultationType: "Virtual",
+      languages: ["English", "German"],
+      experienceYears: 8,
+      hourlyRate: 120,
+      satisfactionScore: 4.9,
+      successfulSessions: "Over 400 specialised cases",
+      memberSince: new Date("2023-01-30"),
+      professionalAssociations: ["European Society of Integrative Medicine"],
+      eventTypeId: "evt_jonas_01",
+      basePrice: 120,
+    },
+
+    {
+      name: "Julia K., RD",
+      title: "Functional Medicine Practitioner",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Gut health specialist supporting patients with IBS, SIBO and food sensitivities.",
+      longBio: `My passion for gut health began by caring for my mother. I help patients heal IBS, SIBO and chronic digestive issues using functional nutrition and culturally sensitive interventions.`,
+      tags: ["IBS", "SIBO", "Food Sensitivities"],
+      country: "United States",
+      consultationType: "Virtual",
+      languages: ["English", "Korean"],
+      experienceYears: 9,
+      hourlyRate: 130,
+      satisfactionScore: 4.9,
+      successfulSessions: "Top-rated gut practitioner",
+      memberSince: new Date("2022-05-19"),
+      professionalAssociations: ["Academy of Nutrition and Dietetics"],
+      eventTypeId: "evt_julia_01",
+      basePrice: 130,
+    },
+
+    {
+      name: "Lara S.",
+      title: "Nutritional Therapist",
+      imageUrl: DEFAULT_IMG,
+      shortBio:
+        "Therapist specialising in women's health, cancer nutritional support, digestive issues and autoimmune conditions.",
+      longBio: `My own challenges with stress, burnout and hormonal imbalance inspired my work. I support women with hormone disorders, digestive issues, autoimmunity and cancer recovery with personalised, compassionate care.`,
+      tags: ["Women's Health", "Autoimmunity", "Cancer Support"],
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: ["English"],
+      experienceYears: 11,
+      hourlyRate: 115,
+      satisfactionScore: 5.0,
+      successfulSessions: "Highly experienced practitioner",
+      memberSince: new Date("2025-01-08"),
+      professionalAssociations: ["BANT", "CNHC"],
+      eventTypeId: "evt_lara_01",
+      basePrice: 115,
+    },
+  ];
+
+  await prisma.practitioner.createMany({ data: practitioners });
+
+  console.log("🌱 Seed completed.");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Seed error:", e);
+    console.error(e);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .finally(() => prisma.$disconnect());

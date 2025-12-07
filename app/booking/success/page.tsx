@@ -23,7 +23,6 @@ export default function SuccessPage({
 }: {
   searchParams: Promise<{ bookingId?: string }>;
 }) {
-  // Unwrap params (Next.js 16 requirement)
   const { bookingId } = React.use(searchParams);
 
   const [loading, setLoading] = useState(true);
@@ -60,7 +59,6 @@ export default function SuccessPage({
     load();
   }, [bookingId]);
 
-  // ---- UI STATES ----
   if (loading) {
     return (
       <div className="hg-page flex items-center justify-center p-10">

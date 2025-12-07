@@ -1,48 +1,34 @@
-// app/book/[practitionerId]/utils/slotUtils.ts
+import { format, differenceInCalendarDays, startOfDay } from "date-fns";
 
 export function formatSlotShort(iso: string): string {
   const d = new Date(iso);
 
-  return d.toLocaleString("en-GB", {
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    day: "2-digit",
-    month: "short",
-  });
+  return format(d, "eee, dd MMM, HH:mm");
 }
 
 export function formatDayHeader(iso: string): string {
   const d = new Date(iso);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfDay(new Date());
+  const day = startOfDay(d);
 
-  const day = new Date(iso);
-  day.setHours(0, 0, 0, 0);
-
-  const diffDays = Math.round((day.getTime() - today.getTime()) / 86400000);
+  const diffDays = differenceInCalendarDays(day, today);
 
   if (diffDays === 0) return "Today";
   if (diffDays === 1) return "Tomorrow";
 
-  return d.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "short",
-  });
+  return format(d, "eeee, d MMM");
 }
 
 export function groupSlotsByDay(slots: { start: string }[]) {
   const groups: Record<string, { start: string }[]> = {};
 
   for (const slot of slots) {
-    const dayKey = slot.start.substring(0, 10); // YYYY-MM-DD
+    const dayKey = slot.start.substring(0, 10); 
     if (!groups[dayKey]) groups[dayKey] = [];
     groups[dayKey].push(slot);
   }
 
-  // Ordena cada grupo por horário
   for (const key of Object.keys(groups)) {
     groups[key] = groups[key].sort(
       (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()

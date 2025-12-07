@@ -8,15 +8,37 @@ datasource db {
 }
 
 model Practitioner {
-  id          Int       @id @default(autoincrement())
-  name        String
-  specialty   String
-  description String
+  id                Int       @id @default(autoincrement())
+  name              String
+  title             String?              // ex: “Nutritional Therapist”, “Functional Medicine Practitioner”
+  imageUrl          String
+
+  shortBio          String               // texto usado nos cards (1 parágrafo curto)
+  longBio           String               // o bloco “Why I Help Patients”
+
+  tags              String[]             // Anxiety, Gut Health, etc
+
+  country           String               // "United Kingdom"
+  city              String?              // opcional
+  consultationType  String               // "Virtual", "In-person", “Hybrid”
+
+  languages         String[]
+  experienceYears   Int
+  hourlyRate        Int                  // ex: 80
+
+  satisfactionScore Float                // ex: 5.0
+  successfulSessions String              // ex: “Recently joined HealGuid”
+  memberSince        DateTime
+
+  professionalAssociations String[]
+
+  // original project fields
   eventTypeId String
   basePrice   Int
 
   bookings    Booking[]
 }
+
 
 model Booking {
   id              Int       @id @default(autoincrement())

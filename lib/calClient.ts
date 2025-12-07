@@ -1,5 +1,3 @@
-// /lib/calClient.ts
-
 import { addDays, formatISO } from "date-fns";
 
 const CAL_API_BASE = "https://api.cal.com/v1";
@@ -16,7 +14,7 @@ export async function fetchCalAvailability(eventTypeId: string) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Caso você use API key do Cal.com:
+
         Authorization: `Bearer ${process.env.CAL_API_KEY ?? ""}`,
       },
       cache: "no-store",
