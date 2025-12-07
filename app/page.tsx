@@ -1,9 +1,14 @@
+"use client";
+
 // app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 
 const HERO_VIDEO = "/videos/hero/mountains-trimmed.mp4";
 const LOGO_SRC = "/images/logos/healGuid-v2.svg";
+
 
 export default function LandingPage() {
   return (
@@ -97,6 +102,9 @@ function HeroSection() {
 }
 
 function HeaderNav() {
+  const pathname = usePathname();
+  const isPartners = pathname.startsWith("/partners");
+
   return (
     <header className="absolute top-0 left-0 w-full z-20 flex justify-center px-6 pt-6">
       <div className="
@@ -123,11 +131,14 @@ function HeaderNav() {
 
         {/* CENTER MENU */}
         <nav className="hidden md:flex items-center gap-10 text-white font-medium text-sm">
-          <Link href="#practitioners">For Practitioners</Link>
+          <Link href="/partners">
+            {isPartners ? "For Clients" : "For Practitioners"}
+          </Link>
           <Link href="#find">Find a Specialist</Link>
           <Link href="#journey">How We Work</Link>
           <Link href="#about">About</Link>
         </nav>
+
 
         {/* RIGHT BUTTON */}
         <Link
