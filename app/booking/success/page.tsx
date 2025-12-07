@@ -6,11 +6,9 @@ interface BookingData {
   id: number;
   status: string;
   slot: string;
-  patient: {
-    name: string;
-    email: string;
-    phone: string;
-  };
+  name: string;
+  email: string;
+  phone: string;
   practitioner: {
     id: number;
     name: string;
@@ -18,11 +16,11 @@ interface BookingData {
   };
 }
 
-export default function SuccessPage({
-  searchParams,
-}: {
+type SuccessPageProps = {
   searchParams: Promise<{ bookingId?: string }>;
-}) {
+};
+
+export default function SuccessPage({ searchParams }: SuccessPageProps) {
   const { bookingId } = React.use(searchParams);
 
   const [loading, setLoading] = useState(true);
@@ -31,7 +29,7 @@ export default function SuccessPage({
 
   useEffect(() => {
     if (!bookingId) {
-      setError("Booking ID ausente.");
+      setError("ID da reserva ausente.");
       setLoading(false);
       return;
     }
@@ -51,7 +49,7 @@ export default function SuccessPage({
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Erro ao buscar dados do booking.");
+        setError("Erro ao buscar dados da reserva.");
         setLoading(false);
       }
     }
@@ -59,6 +57,7 @@ export default function SuccessPage({
     load();
   }, [bookingId]);
 
+  // Estado de carregamento
   if (loading) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
@@ -70,12 +69,15 @@ export default function SuccessPage({
     );
   }
 
+  // Erro genérico ou reserva inexistente
   if (error || !booking) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
         <div className="hg-card text-center max-w-md border-red-300 bg-red-50">
           <h2 className="hg-h2 text-red-600 mb-3">Algo deu errado</h2>
-          <p className="hg-body mb-6">{error || "Reserva não encontrada."}</p>
+          <p className="hg-body mb-6">
+            {error || "Reserva não encontrada ou inválida."}
+          </p>
 
           <a href="/" className="hg-btn mt-4">
             Voltar ao início
@@ -90,22 +92,86 @@ export default function SuccessPage({
     timeStyle: "short",
   });
 
-  const confirmed = booking.status === "confirmed";
+  const status = booking.status;
+  const isConfirmed = status === "confirmed";
+  const isPending = status === "pending";
+  const isFailed = status === "failed";
 
+  // Tela específica para pagamento falhado
+  if (isFailed) {
+    return (
+      <div className="hg-page flex items-center justify-center p-10">
+        <div className="hg-card max-w-xl mx-auto text-center border-red-300 bg-red-50">
+          <h1 className="hg-h2 mb-2 text-red-600">
+            Pagamento não concluído ❌
+          </h1>
+
+          <p className="hg-body mb-6">
+            Não foi possível processar o seu pagamento. Nenhuma cobrança foi
+            realizada.
+          </p>
+
+          <div className="bg-hg-bg-section rounded-xl p-5 mb-6 text-left">
+            <h3 className="hg-h3 mb-3 text-hg-teal">Resumo da tentativa</h3>
+
+            <p className="hg-body">
+              <strong>Profissional:</strong> {booking.practitioner.name}
+            </p>
+            <p className="hg-body">
+              <strong>Especialidade:</strong> {booking.practitioner.specialty}
+            </p>
+            <p className="hg-body">
+              <strong>Horário:</strong> {slot}
+            </p>
+            <p className="hg-body">
+              <strong>Status:</strong>{" "}
+              <span className="text-red-600 font-semibold">
+                {booking.status}
+              </span>
+            </p>
+
+            <p className="hg-caption mt-1">
+              Código da reserva:{" "}
+              <span className="font-semibold">{booking.id}</span>
+            </p>
+          </div>
+
+          <p className="hg-body text-gray-700 mb-6">
+            Você pode tentar novamente agendar esta consulta com outro método
+            de pagamento ou em outro horário.
+          </p>
+
+          <a
+            href={`/book/${booking.practitioner.id}`}
+            className="hg-btn mt-4"
+          >
+            Tentar novamente
+          </a>
+
+          <a href="/" className="hg-body mt-4 block text-gray-600">
+            Voltar ao início
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // Telas para confirmed / pending
   return (
     <div className="hg-page flex items-center justify-center p-10">
       <div className="hg-card max-w-xl mx-auto text-center">
         <h1 className="hg-h2 mb-2 text-hg-teal">
-          {confirmed ? "Consulta confirmada! 🎉" : "Pagamento em processamento…"}
+          {isConfirmed
+            ? "Consulta confirmada! 🎉"
+            : "Pagamento em processamento…"}
         </h1>
 
         <p className="hg-body mb-6">
-          {confirmed
+          {isConfirmed
             ? "Sua consulta foi agendada com sucesso."
-            : "Estamos finalizando a confirmação do pagamento."}
+            : "Estamos aguardando a confirmação do seu pagamento. Isso pode levar alguns segundos."}
         </p>
 
-        {/* Summary */}
         <div className="bg-hg-bg-section rounded-xl p-5 mb-6 text-left">
           <h3 className="hg-h3 mb-3 text-hg-teal">Resumo da Reserva</h3>
 
@@ -119,10 +185,15 @@ export default function SuccessPage({
             <strong>Horário:</strong> {slot}
           </p>
           <p className="hg-body">
+            <strong>Paciente:</strong> {booking.name}
+          </p>
+          <p className="hg-body">
             <strong>Status:</strong>{" "}
             <span
               className={
-                confirmed ? "text-green-600 font-semibold" : "text-yellow-600 font-semibold"
+                isConfirmed
+                  ? "text-green-600 font-semibold"
+                  : "text-yellow-600 font-semibold"
               }
             >
               {booking.status}
@@ -130,13 +201,15 @@ export default function SuccessPage({
           </p>
 
           <p className="hg-caption mt-1">
-            Código da reserva: <span className="font-semibold">{booking.id}</span>
+            Código da reserva:{" "}
+            <span className="font-semibold">{booking.id}</span>
           </p>
         </div>
 
-        {!confirmed && (
+        {isPending && (
           <p className="hg-body text-gray-600 mb-6">
-            Você pode atualizar esta página em alguns segundos para verificar a confirmação.
+            Você pode atualizar esta página em alguns segundos para verificar a
+            confirmação.
           </p>
         )}
 

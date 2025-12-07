@@ -1,33 +1,43 @@
-export default function CancelPage() {
+"use client";
+
+import React from "react";
+
+type CancelPageProps = {
+  searchParams: Promise<{ bookingId?: string }>;
+};
+
+export default function CancelPage({ searchParams }: CancelPageProps) {
+  const { bookingId } = React.use(searchParams);
+
   return (
-    <div style={{ padding: "40px", maxWidth: "600px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" }}>
-        ❌ Pagamento cancelado
-      </h1>
+    <div className="hg-page flex items-center justify-center p-10">
+      <div className="hg-card max-w-xl mx-auto text-center">
+        <h1 className="hg-h2 mb-2 text-hg-teal">Pagamento cancelado</h1>
 
-      <p>
-        O pagamento não foi concluído. Sua reserva continua registrada como{" "}
-        <strong>pendente</strong>.
-      </p>
+        <p className="hg-body mb-4">
+          Sua sessão de pagamento foi cancelada. Nenhuma cobrança foi realizada.
+        </p>
 
-      <p style={{ marginTop: "12px" }}>
-        Você pode tentar novamente a qualquer momento.
-      </p>
+        {bookingId && (
+          <p className="hg-caption mb-4">
+            Referência da reserva:{" "}
+            <span className="font-semibold">{bookingId}</span>
+          </p>
+        )}
 
-      <a
-        href="/"
-        style={{
-          display: "inline-block",
-          marginTop: "30px",
-          padding: "10px 18px",
-          background: "#4f46e5",
-          color: "white",
-          borderRadius: "6px",
-          textDecoration: "none",
-        }}
-      >
-        Voltar ao início
-      </a>
+        <p className="hg-body mb-6 text-gray-700">
+          Se desejar, você pode escolher outro horário ou tentar novamente mais
+          tarde.
+        </p>
+
+        <a href="/book" className="hg-btn mt-2">
+          Ver profissionais
+        </a>
+
+        <a href="/" className="hg-body mt-4 block text-gray-600">
+          Voltar ao início
+        </a>
+      </div>
     </div>
   );
 }
