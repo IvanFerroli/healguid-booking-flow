@@ -1,7 +1,7 @@
 "use client";
 
-import { formatSlotShort, formatDayHeader } from "./utils/slotUtils";
-import type { Slot } from "./types";
+import { formatSlotShort, formatDayHeader } from "../utils/slotUtils";
+import type { Slot } from "../types";
 
 type Props = {
   day: string; 

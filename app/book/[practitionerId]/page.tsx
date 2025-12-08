@@ -1,9 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { BookingClientSection } from "./BookingClientSection";
+import { BookingClientSection } from "./components/BookingClientSection";
 export const dynamic = "force-dynamic";
 import { Suspense } from "react";
-import { LoadingAvailability } from "./LoadingAvailability";
-
+import { LoadingAvailability } from "./components/LoadingAvailability";
 
 type PageProps = {
     params: Promise<{ practitionerId: string }>;

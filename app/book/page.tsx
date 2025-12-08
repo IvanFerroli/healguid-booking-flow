@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import PractitionerFiltersClient from "./PractitionerFiltersClient";
+import PractitionerFiltersClient from "./components/PractitionerFiltersClient";
 
 export const revalidate = 0;
 

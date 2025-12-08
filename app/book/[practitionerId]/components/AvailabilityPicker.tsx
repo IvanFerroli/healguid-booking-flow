@@ -1,6 +1,6 @@
 "use client";
 
-import { groupSlotsByDay } from "./utils/slotUtils";
+import { groupSlotsByDay } from "../utils/slotUtils";
 import { SlotDayGroup } from "./SlotDayGroup";
 
 export type Slot = {
