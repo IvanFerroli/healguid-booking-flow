@@ -18,7 +18,6 @@ export default function LandingPage() {
       <WhatWeOfferSection />
       <HealingJourneySection />
       <PromiseSection />
-      <FooterSection />
     </main>
   );
 }
@@ -410,41 +409,5 @@ function PromiseSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-/* ------------------------------ FOOTER ------------------------------ */
-
-function FooterSection() {
-  return (
-    <footer className="bg-page-cream border-t border-border-soft/60 py-10">
-      <div className="hg-section flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-3">
-          <Image
-            src={LOGO_SRC}
-            alt="HealGuid"
-            width={130}
-            height={36}
-            className="h-9 w-auto"
-          />
-          <p className="text-xs text-text-soft">
-            A modern way to find verified holistic & functional medicine care.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-4 text-xs text-text-soft">
-          <Link href="#about" className="hover:text-brand-teal">
-            About
-          </Link>
-          <Link href="#match" className="hover:text-brand-teal">
-            Get Matched
-          </Link>
-          <Link href="#promise" className="hover:text-brand-teal">
-            Our Mission
-          </Link>
-          <span>© {new Date().getFullYear()} HealGuid • All rights reserved</span>
-        </div>
-      </div>
-    </footer>
   );
 }
