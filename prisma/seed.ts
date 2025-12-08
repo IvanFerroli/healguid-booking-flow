@@ -39,7 +39,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
         "CNHC (Complementary and Natural Healthcare Council)",
       ]),
 
-      eventTypeId: "4106972",
+      eventTypeId: "4107320",
       basePrice: 80,
     },
 
@@ -63,7 +63,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       professionalAssociations: JSON.stringify([
         "IFM (Institute for Functional Medicine)",
       ]),
-      eventTypeId: "evt_christelle_01",
+      eventTypeId: "4107334",
       basePrice: 110,
     },
 
@@ -85,7 +85,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       successfulSessions: "Over 500 sessions completed",
       memberSince: new Date("2023-07-15"),
       professionalAssociations: JSON.stringify(["GMC", "IFM Certified"]),
-      eventTypeId: "evt_ayiesha_01",
+      eventTypeId: "4107353",
       basePrice: 150,
     },
 
@@ -113,7 +113,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       professionalAssociations: JSON.stringify([
         "American Osteopathic Association",
       ]),
-      eventTypeId: "evt_ignacio_01",
+      eventTypeId: "4107357",
       basePrice: 140,
     },
 
@@ -135,7 +135,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       successfulSessions: "Highly requested practitioner",
       memberSince: new Date("2024-11-12"),
       professionalAssociations: JSON.stringify(["HCPC", "BDA"]),
-      eventTypeId: "evt_ines_01",
+      eventTypeId: "4107361",
       basePrice: 100,
     },
 
@@ -163,7 +163,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       professionalAssociations: JSON.stringify([
         "European Society of Integrative Medicine",
       ]),
-      eventTypeId: "evt_jonas_01",
+      eventTypeId: "4107366",
       basePrice: 120,
     },
 
@@ -187,7 +187,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       professionalAssociations: JSON.stringify([
         "Academy of Nutrition and Dietetics",
       ]),
-      eventTypeId: "evt_julia_01",
+      eventTypeId: "4107375",
       basePrice: 130,
     },
 
@@ -213,7 +213,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       successfulSessions: "Highly experienced practitioner",
       memberSince: new Date("2025-01-08"),
       professionalAssociations: JSON.stringify(["BANT", "CNHC"]),
-      eventTypeId: "evt_lara_01",
+      eventTypeId: "4107377",
       basePrice: 115,
     },
     {
@@ -242,7 +242,7 @@ Today, I support individuals dealing with chronic inflammation, hormonal imbalan
       professionalAssociations: JSON.stringify([
         "British Naturopathic Association",
       ]),
-      eventTypeId: "evt_lucia_01",
+      eventTypeId: "4107379",
       basePrice: 105,
     },
   ];
