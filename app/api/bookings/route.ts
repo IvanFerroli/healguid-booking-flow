@@ -45,7 +45,16 @@ import { prisma } from "@/lib/prisma";
 import { fetchCalAvailability } from "@/lib/calClient";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error("Stripe secret key missing at runtime");
+  }
+
+  return new Stripe(key, {
+  });
+}
+
 
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -122,6 +131,7 @@ export async function POST(req: Request) {
 
     bookingId = booking.id;
 
+    const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",

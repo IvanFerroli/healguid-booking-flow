@@ -14,7 +14,15 @@ import { prisma } from "@/lib/prisma";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error("Stripe secret key missing at runtime");
+  }
+
+  return new Stripe(key, {
+  });
+}
 
 /**
  * Reads the raw request body as a Buffer.
@@ -41,8 +49,9 @@ export async function POST(req: Request) {
 
     try {
         const rawBody = await getRawBody(req);
+        const stripeInstance = getStripe();
 
-        event = stripe.webhooks.constructEvent(
+        event = stripeInstance.webhooks.constructEvent(
             rawBody,
             signature,
             webhookSecret
