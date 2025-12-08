@@ -1,3 +1,5 @@
+/** Hero-style translucent header for the landing page with scroll-based transition. */
+
 "use client";
 
 import Image from "next/image";

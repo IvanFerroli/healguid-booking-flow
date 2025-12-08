@@ -1,6 +1,17 @@
+/**
+ * @file PractitionerHero
+ *
+ * Displays the practitioner’s main header section:
+ * photo, name, title, country, tags and the primary CTA.
+ *
+ * Notes:
+ * - `practitioner.tags` is stored in the DB as a JSON string,
+ *   so we parse it here to render tag pills.
+ */
+
 import Image from "next/image";
 import Link from "next/link";
-import type { PractitionerData } from "./types";
+import type { PractitionerData } from "../types";
 
 interface PractitionerHeroProps {
   practitioner: PractitionerData;

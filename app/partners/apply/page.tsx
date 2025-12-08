@@ -1,3 +1,9 @@
+/**
+ * @file ApplyPage
+ *
+ * Placeholder page for the practitioner application form.
+ */
+
 export default function ApplyPage() {
   return (
     <main className="min-h-screen hg-default-page bg-surface pt-28 pb-20">

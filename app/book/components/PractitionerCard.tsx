@@ -1,3 +1,10 @@
+/**
+ * @file PractitionerCard component
+ *
+ * Displays practitioner summary info with photo, bio, and navigation
+ * links to the profile page and booking flow.
+ */
+
 "use client";
 
 import Image from "next/image";

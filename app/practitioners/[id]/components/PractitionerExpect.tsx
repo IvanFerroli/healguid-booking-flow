@@ -1,3 +1,9 @@
+/**
+ * @file PractitionerExpect
+ *
+ * Static section describing what clients can expect during their first session.
+ */
+
 export default function PractitionerExpect() {
   const items = [
     {

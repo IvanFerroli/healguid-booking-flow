@@ -1,3 +1,5 @@
+/** Chooses which header variant to display based on current pathname. */
+
 "use client";
 
 import { usePathname } from "next/navigation";

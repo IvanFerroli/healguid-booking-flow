@@ -1,3 +1,9 @@
+/**
+ * @file SlotDayGroup component
+ *
+ * Renders a group of time slots for a specific day, allowing the user to select one.
+ */
+
 "use client";
 
 import { formatSlotShort, formatDayHeader } from "../utils/slotUtils";

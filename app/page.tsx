@@ -1,3 +1,22 @@
+/**
+ * LandingPage (client component)
+ *
+ * High-level marketing/hero landing page for HealGuid.
+ *
+ * Purpose:
+ * - Renders the full public-facing homepage with hero video, trust sections,
+ *   treatment approaches, patient journey, and marketing CTAs.
+ * - Entirely static content for now — no data fetching or dynamic state.
+ * - Uses local inline section components to keep the file self-contained.
+ *
+ * Notes:
+ * - Marked as `"use client"` because the hero video and some future interactions
+ *   require client-side rendering.
+ * - Sections are intentionally simple placeholders until real CMS content
+ *   (Notion / Sanity / custom admin) is integrated.
+ * - When replacing text/images later, update only the relevant section functions.
+ */
+
 "use client";
 
 import Image from "next/image";

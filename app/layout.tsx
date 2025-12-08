@@ -1,3 +1,16 @@
+/**
+ * Global root layout for the entire Next.js 16 application.
+ *
+ * Responsibilities:
+ * - Registers global fonts (Geist Sans + Mono) using CSS variables.
+ * - Imports global Tailwind / design system styles via globals.css.
+ * - Wraps all routes with the universal Header and Footer components.
+ *
+ * Notes:
+ * - `children` represents the active route segment rendered between Header and Footer.
+ * - This layout is RSC (server component) — avoid client-side hooks here.
+ */
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -13,6 +26,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+/**
+ * Default SEO metadata applied across the application.
+ * Individual pages may override this via their own `metadata` exports.
+ */
 
 export const metadata: Metadata = {
   title: "Create Next App",

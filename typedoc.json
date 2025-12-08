@@ -1,0 +1,13 @@
+{
+  "entryPoints": [
+    "app/api",
+    "app/book",
+    "app/practitioners",
+    "lib"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "tsconfig": "tsconfig.json",
+  "cleanOutputDir": true,
+  "skipErrorChecking": true
+}

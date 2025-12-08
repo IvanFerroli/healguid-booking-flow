@@ -1,3 +1,10 @@
+/**
+ * @file BookingClientSection component
+ *
+ * Coordinates practitioner info, slot selection, and the booking form.
+ * Acts as the main client-side container for the booking flow.
+ */
+
 "use client";
 
 import { useState } from "react";

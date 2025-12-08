@@ -1,4 +1,14 @@
-import type { PractitionerData } from "./types";
+/**
+ * @file PractitionerMeta
+ *
+ * Renders small metadata badges for a practitioner
+ * (e.g., verification, certification).
+ *
+ * Currently static, but structured for future dynamic flags
+ * such as insurance, location type, or experience tier.
+ */
+
+import type { PractitionerData } from "../types";
 
 interface PractitionerMetaProps {
   practitioner: PractitionerData;

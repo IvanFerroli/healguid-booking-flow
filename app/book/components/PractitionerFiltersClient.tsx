@@ -1,3 +1,9 @@
+/**
+ * @file PractitionerFiltersClient component
+ *
+ * Client-side filtering UI for searching, narrowing, and paginating practitioners.
+ */
+
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -25,7 +31,8 @@ export default function PractitionerFiltersClient({
   const [type, setType] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  // 🔍 FILTER LOGIC
+  // Computes search + specialty + consultation-type filters with memoization
+
   const filtered = useMemo(() => {
     const normalizedSearch = search.toLowerCase();
     const normalizedSpecialty = specialty.toLowerCase();

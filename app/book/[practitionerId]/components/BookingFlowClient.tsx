@@ -1,9 +1,16 @@
+/**
+ * @file BookingFlowClient component
+ *
+ * Client-side wrapper for the booking flow.
+ * Handles slot selection and renders the form + availability panels.
+ */
+
 "use client";
 
 import { useState } from "react";
 import { BookingForm } from "./BookingForm";
 import { AvailabilityPicker } from "./AvailabilityPicker";
-import type { Slot } from "./types";
+import type { Slot } from "../types";
 
 type BookingFlowClientProps = {
     practitionerId: number;

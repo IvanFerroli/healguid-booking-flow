@@ -1,3 +1,9 @@
+/**
+ * @file AvailabilityPicker component
+ *
+ * Renders grouped time slots and allows users to select or toggle a slot.
+ */
+
 "use client";
 
 import { groupSlotsByDay } from "../utils/slotUtils";
@@ -10,10 +16,7 @@ export type Slot = {
 type AvailabilityPickerProps = {
     slots: Slot[];
     selectedSlot: string | null;
-    /**
-     * Chamado quando o usuário clica em um slot.
-     * Quando o mesmo slot é clicado novamente, mandamos null (toggle off).
-     */
+   
     onSelectSlot: (slot: Slot | null) => void;
 };
 

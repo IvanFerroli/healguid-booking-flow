@@ -1,4 +1,10 @@
-        export default function PartnersPage() {
+/**
+ * @file PartnersPage
+ *
+ * Marketing page inviting practitioners to join the HealGuid platform.
+ */
+
+export default function PartnersPage() {
         return (
             <main className="min-h-screen hg-default-page bg-surface pt-28 pb-20">
             <div className="hg-section text-center">

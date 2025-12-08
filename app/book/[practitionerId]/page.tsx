@@ -1,3 +1,10 @@
+/**
+ * @file Practitioner booking page (server component)
+ *
+ * Loads practitioner data, fetches availability (live or fallback),
+ * and renders the full booking flow UI.
+ */
+
 import { prisma } from "@/lib/prisma";
 import { BookingClientSection } from "./components/BookingClientSection";
 export const dynamic = "force-dynamic";
@@ -63,6 +70,11 @@ export default async function Page({ params }: PageProps) {
         slots: { start: string }[];
     };
 
+    /**
+ * Fetches practitioner availability from the API route.
+ * Returns "live" mode when successful, otherwise "error".
+ */
+
     async function fetchAvailability(): Promise<AvailabilityResult> {
         try {
             const baseUrl =
@@ -96,6 +108,8 @@ export default async function Page({ params }: PageProps) {
 
     let slots = availability.slots;
     let availabilityMode = availability.mode;
+
+    // Fallback: generate example slots when live availability cannot be loaded
 
     if (availabilityMode === "error" && slots.length === 0) {
         const now = new Date();

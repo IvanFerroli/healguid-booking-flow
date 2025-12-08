@@ -1,3 +1,9 @@
+/**
+ * @file LoadingAvailability component
+ *
+ * Skeleton placeholder shown while availability is loading.
+ */
+
 "use client";
 
 export function LoadingAvailability() {

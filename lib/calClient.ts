@@ -1,13 +1,6 @@
-import { addDays, addMinutes, formatISO } from "date-fns";
+/** Fetches 14-day availability from Cal.com (v1 /slots), normalizes to ISO slots and enforces London timezone. */
 
-/**
- * Cal.com Starter API (Free plan)
- *
- * - Usa somente a API v1
- * - API key deve ser enviada via querystring (?apiKey=xxx)
- * - NÃO usar header Authorization
- * - Endpoint correto: /v1/slots
- */
+import { addDays, addMinutes, formatISO } from "date-fns";
 
 const CAL_API_BASE = "https://api.cal.com/v1";
 

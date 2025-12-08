@@ -1,3 +1,10 @@
+/**
+ * @file BookingForm component
+ *
+ * Collects user details and sends a booking request to the server.
+ * Handles slot validation, Zod-based form validation, and redirect to Stripe Checkout.
+ */
+
 "use client";
 
 import { useState } from "react";
@@ -30,14 +37,15 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 type BookingFormProps = {
     practitionerId: number;
     selectedSlot?: string | null;
-    /**
-     * Modo de disponibilidade vindo do servidor:
-     * - "live": horários reais (exigir slot)
-     * - "fallback": horários de exemplo (ideal exigir, mas OK se não)
-     * - "error": erro ao carregar disponibilidade (não exigir slot)
-     */
+    
     availabilityMode?: "live" | "fallback" | "error";
 };
+
+/**
+ * Custom resolver that adapts Zod errors to React Hook Form's format.
+ * Allows consistent field-level error reporting while using Zod schemas.
+ */
+
 
 const bookingResolver: Resolver<BookingFormValues> = async (
     values,
@@ -428,11 +436,7 @@ export function BookingForm({
 
             {/* Submit */}
             <div className="pt-2">
-                {/*
-    Desabilita o botão apenas se:
-    - está submetendo, ou
-    - existem slots disponíveis E nenhum foi selecionado
-  */}
+            
                 <button
                     type="submit"
                     className={`
@@ -450,14 +454,12 @@ export function BookingForm({
                             : "Request Consultation"}
                 </button>
 
-                {/* Mensagem de ajuda só faz sentido se existem slots */}
                 {slotRequired && !selectedSlot && !isSubmitting && (
                     <p className="mt-2 text-xs text-text-soft text-center">
                         Select an available time on the right to enable your booking.
                     </p>
                 )}
 
-                {/* Quando NÃO há slots, dá pra adicionar uma nota suave opcional */}
                 {!slotRequired && !isSubmitting && (
                     <p className="mt-2 text-xs text-text-soft text-center">
                         No live times are available right now, but you can still request a

@@ -1,3 +1,11 @@
+/**
+ * @file CancelPage component
+ *
+ * Displays booking status after a canceled or abandoned Stripe checkout session.
+ * Fetches the booking to determine whether payment actually failed, was canceled,
+ * or was completed despite user abandonment.
+ */
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -12,6 +20,8 @@ export default function CancelPage({ searchParams }: CancelPageProps) {
   const [booking, setBooking] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch booking status to determine final payment outcome (confirmed, pending, failed)
+
   useEffect(() => {
     if (!bookingId) {
       setLoading(false);
@@ -23,7 +33,7 @@ export default function CancelPage({ searchParams }: CancelPageProps) {
         const res = await fetch(`/api/bookings/${bookingId}`);
         const data = await res.json();
         if (res.ok) setBooking(data);
-      } catch {}
+      } catch { }
       finally {
         setLoading(false);
       }
@@ -35,8 +45,8 @@ export default function CancelPage({ searchParams }: CancelPageProps) {
   const status = booking?.status;
 
   const isConfirmed = status === "confirmed";
-  const isPending   = status === "pending";
-  const isFailed    = status === "failed";
+  const isPending = status === "pending";
+  const isFailed = status === "failed";
 
   return (
     <div className="hg-page hg-default-page flex items-center justify-center p-10">

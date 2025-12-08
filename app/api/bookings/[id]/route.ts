@@ -1,3 +1,30 @@
+/**
+ * @file Booking lookup route (GET /api/bookings/[id])
+ *
+ * Summary:
+ *  Fetches a single booking by ID, including minimal practitioner info,
+ *  and returns a normalized JSON response for the Success/Cancel pages.
+ *
+ * Responsibilities:
+ *  - Parse and validate the dynamic booking ID from route params
+ *  - Query the database for the booking and its practitioner
+ *  - Normalize the result into a lightweight public-facing shape
+ *
+ * Inputs:
+ *  - Route params: { id: string } (async due to Next.js 16 route handlers)
+ *
+ * Outputs:
+ *  - 200: booking data (id, status, slot, patient details, practitioner)
+ *  - 400: invalid booking ID
+ *  - 404: booking not found
+ *  - 500: unexpected server/database error
+ *
+ * Notes:
+ *  - Used by the Success and Cancel pages to display accurate booking status.
+ *  - Does not expose sensitive internal fields from the Practitioner model.
+ */
+
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 

@@ -1,3 +1,5 @@
+/** Footer component — static brand + navigation section for public pages. */
+
 "use client";
 
 import Image from "next/image";

@@ -1,3 +1,9 @@
+/**
+ * @file FooterActions
+ *
+ * Simple CTA section shown at the bottom of practitioner pages.
+ */
+
 import Link from "next/link";
 
 export default function FooterActions() {

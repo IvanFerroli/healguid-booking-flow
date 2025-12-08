@@ -1,4 +1,11 @@
-import type { PractitionerData } from "./types";
+/**
+ * @file PractitionerDetails
+ *
+ * Displays extended practitioner information such as bio, associations,
+ * and years of experience.
+ */
+
+import type { PractitionerData } from "../types";
 
 export default function PractitionerDetails({ practitioner }: { practitioner: PractitionerData }) {
   return (

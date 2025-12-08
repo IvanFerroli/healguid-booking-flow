@@ -1,4 +1,15 @@
-import type { PractitionerData } from "./types";
+/**
+ * @file PractitionerStats
+ *
+ * Small presentational grid showing key practitioner metrics:
+ * consultation type, languages, rate, satisfaction score,
+ * session count, and membership date.
+ *
+ * All values come from `PractitionerData`. Arrays stored as JSON
+ * (e.g. languages) are parsed locally; no logic beyond display.
+ */
+
+import type { PractitionerData } from "../types";
 
 interface PractitionerStatsProps {
   practitioner: PractitionerData;

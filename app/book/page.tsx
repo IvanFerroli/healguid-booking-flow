@@ -1,3 +1,10 @@
+/**
+ * @file PractitionersDirectoryPage (server component)
+ *
+ * Displays the full directory of practitioners and renders the client-side
+ * filtering component.
+ */
+
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import PractitionerFiltersClient from "./components/PractitionerFiltersClient";

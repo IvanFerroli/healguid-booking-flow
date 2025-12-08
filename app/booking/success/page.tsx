@@ -1,3 +1,10 @@
+/**
+ * @file SuccessPage component
+ *
+ * Displays booking status after Stripe checkout. Performs an initial fetch to
+ * retrieve booking details and auto-polls while payment remains pending.
+ */
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -26,6 +33,8 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState<BookingData | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Initial fetch: load booking details and detect error states
 
   useEffect(() => {
     if (!bookingId) {
@@ -57,7 +66,8 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     load();
   }, [bookingId]);
 
-  // Auto-polling while pending
+  // Auto-poll booking status while pending (stops when confirmed or after ~45s)
+
   useEffect(() => {
     if (!bookingId) return;
 

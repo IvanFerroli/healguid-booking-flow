@@ -1,11 +1,16 @@
+/**
+ * @file PractitionerCTA
+ *
+ * Call-to-action section encouraging users to begin the booking flow
+ * with a specific practitioner.
+ */
+
 import Link from "next/link";
-import type { PractitionerData } from "./types";
+import type { PractitionerData } from "../types";
 
 interface PractitionerCTAProps {
   practitioner: PractitionerData;
 }
-
-
 
 export default function PractitionerCTA({ practitioner }: PractitionerCTAProps) {
   return (

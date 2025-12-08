@@ -1,3 +1,16 @@
+/// HealGuid Database Schema (SQLite)
+///
+/// - Practitioners store all profile, pricing and Cal.com mapping data.
+/// - Bookings track client requests, Stripe payment state and session IDs.
+/// - StripeWebhookEvent ensures idempotent processing of Stripe events.
+///
+/// Notes:
+/// • Arrays are stored as JSON strings for SQLite compatibility.
+/// • Relation: Practitioner 1—N Booking.
+/// • Booking.status drives UX flows: "pending", "confirmed", "failed", "cancelled".
+/// • eventTypeId + basePrice power Cal.com and Stripe integrations.
+
+
 generator client {
   provider = "prisma-client-js"
 }

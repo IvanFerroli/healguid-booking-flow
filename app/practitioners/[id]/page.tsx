@@ -1,9 +1,18 @@
-// app/practitioners/[id]/page.tsx
 import { prisma } from "@/lib/prisma";
 import PractitionerPage from "./PractitionerPage";
 
+/**
+ * Practitioner profile page (RSC).
+ *
+ * - Next.js 15/16 passes `params` as a Promise → must `await` props.params.
+ * - Validates practitioner ID from route.
+ * - Fetches practitioner from Prisma and renders PractitionerPage (client layout).
+ *
+ * Keep this file minimal: all UI lives in PractitionerPage and its children.
+ */
+
 export default async function Page(props: { params: Promise<{ id: string }> }) {
-  // 🔥 Next.js 16 RSC: params é Promise — precisamos await
+
   const { id } = await props.params;
   const practitionerId = Number(id);
 

@@ -1,3 +1,5 @@
+/** Default site header shown on all non-landing and non-partners pages. */
+
 "use client";
 
 import Image from "next/image";

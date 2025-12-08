@@ -1,3 +1,10 @@
+/**
+ * @file Testimonials
+ *
+ * Static placeholder testimonial section used across practitioner pages.
+ * Currently hard-coded for MVP; replace with dynamic testimonials later.
+ */
+
 export default function Testimonials() {
   return (
     <section className="space-y-6 py-10">

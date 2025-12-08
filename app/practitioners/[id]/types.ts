@@ -1,3 +1,17 @@
+/**
+ * Shape of a practitioner record as returned from Prisma for
+ * the public-facing practitioner pages.
+ *
+ * Notes:
+ * - `tags` and `languages` come as JSON strings from the database → components
+ *   must `JSON.parse()` before use.
+ * - `memberSince` may be Date (server) or string (client) due to serialization.
+ * - All fields correspond directly to the Practitioner model in the database.
+ *
+ * This interface is intentionally “raw” (matches DB output) — UI components
+ * should adapt/format as needed rather than mutating this shape.
+ */
+
 export interface PractitionerData {
   id: number;
   name: string;
@@ -7,13 +21,11 @@ export interface PractitionerData {
   shortBio: string;
   longBio: string;
 
-  // JSON em string (como vem do banco)
   tags: string;
   country: string;
   city: string | null;
   consultationType: string;
 
-  // também JSON em string
   languages: string;
 
   experienceYears: number;

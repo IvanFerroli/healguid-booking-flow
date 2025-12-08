@@ -1,3 +1,5 @@
+/** Header variant for the partners area with route-aware navigation and teal CTA. */
+
 "use client";
 
 import Image from "next/image";
