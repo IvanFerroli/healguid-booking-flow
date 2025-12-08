@@ -75,13 +75,13 @@ export default async function Page({ params }: PageProps) {
  * Returns "live" mode when successful, otherwise "error".
  */
 
-    async function fetchAvailability(): Promise<AvailabilityResult> {
+    async function fetchAvailability(practitionerId: number): Promise<AvailabilityResult> {
         try {
             const baseUrl =
                 process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
             const res = await fetch(
-                `${baseUrl}/api/practitioners/${practitioner.id}/availability`,
+                `${baseUrl}/api/practitioners/${practitionerId}/availability`,
                 { cache: "no-store" }
             );
 
@@ -104,7 +104,7 @@ export default async function Page({ params }: PageProps) {
     await new Promise((r) => setTimeout(r, 400));
 
 
-    const availability = await fetchAvailability();
+    const availability = await fetchAvailability(practitioner.id);
 
     let slots = availability.slots;
     let availabilityMode = availability.mode;
