@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import PractitionerPage from "./PractitionerPage";
+import PractitionerPage from "./components/PractitionerPage";
 
 /**
  * Practitioner profile page (RSC).
