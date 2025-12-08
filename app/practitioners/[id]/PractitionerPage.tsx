@@ -17,7 +17,7 @@ interface PractitionerPageProps {
 
 export default function PractitionerPage({ practitioner }: PractitionerPageProps) {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen hg-default-page bg-surface pb-20">
       <div className="max-w-5xl mx-auto px-6 py-10 space-y-12">
 
         {/* Hero */}

@@ -10,7 +10,7 @@ export default async function PractitionersDirectoryPage() {
     });
 
     return (
-        <main className="min-h-screen bg-page-cream pb-20">
+        <main className="min-h-screen hg-default-page bg-page-cream pb-20">
             {/* TOP BANNER */}
             <section className="bg-surface py-10 border-b border-border-soft">
                 <div className="hg-section text-center">

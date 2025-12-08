@@ -141,3 +141,8 @@ body {
   @apply bg-brand-orange-soft text-brand-orange border-brand-orange;
   transform: translateY(-1px);
 }
+
+/* Aplica apenas nas páginas que usam o header default */
+.hg-default-page {
+  padding-top: 76px; /* mesma altura do header fixo */
+}

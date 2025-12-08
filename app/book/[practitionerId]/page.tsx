@@ -41,7 +41,7 @@ export default async function Page({ params }: PageProps) {
 
     if (!practitioner) {
         return (
-            <div className="min-h-screen px-6 py-10 max-w-3xl mx-auto">
+            <div className="min-h-screen hg-default-page px-6 py-10 max-w-3xl mx-auto">
                 <h1 className="text-3xl font-bold mb-4 text-red-600">
                     Practitioner not found
                 </h1>
@@ -111,7 +111,7 @@ export default async function Page({ params }: PageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-page-cream px-4 py-10">
+        <div className="min-h-screen hg-default-page bg-page-cream px-4 py-10">
             <main className="hg-section space-y-12">
                 {/* HEADER / HERO */}
                 <header className="space-y-3">
