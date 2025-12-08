@@ -304,14 +304,7 @@ export function BookingForm({
                                 {...register("consultationPreference")}
                             />
 
-                            <span
-                                className="
-                  hg-pill bg-surface-soft text-text-main
-                  peer-checked:bg-brand-orange-soft 
-                  peer-checked:text-brand-orange
-                  transition
-                "
-                            >
+                            <span className="hg-select-pill">
                                 {opt.label}
                             </span>
                         </label>
@@ -360,14 +353,7 @@ export function BookingForm({
                                     {...register("bestTimes")}
                                 />
 
-                                <span
-                                    className="
-                    hg-pill bg-surface-soft text-text-main
-                    peer-checked:bg-brand-orange-soft 
-                    peer-checked:text-brand-orange
-                    transition
-                  "
-                                >
+                                <span className="hg-select-pill">
                                     {opt.label}
                                 </span>
                             </label>
@@ -453,15 +439,15 @@ export function BookingForm({
                             hg-btn-primary w-full justify-center
                             ${!selectedSlot ? "opacity-50 cursor-not-allowed" : ""}
                         `}
-                        disabled={isSubmitting || (slotRequired && !selectedSlot)}
+                    disabled={isSubmitting || (slotRequired && !selectedSlot)}
                 >
                     {isSubmitting
                         ? "Redirecting to checkout..."
-                            : slotRequired
-                                ? selectedSlot
-                                    ? "Request Consultation"
-                                    : "Select a time to continue"
-                                : "Request Consultation"}
+                        : slotRequired
+                            ? selectedSlot
+                                ? "Request Consultation"
+                                : "Select a time to continue"
+                            : "Request Consultation"}
                 </button>
 
                 {/* Mensagem de ajuda só faz sentido se existem slots */}

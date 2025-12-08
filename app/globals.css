@@ -106,3 +106,38 @@ body {
     border border-white/10
     shadow-soft;
 }
+
+/* ==========================================================
+   UNIVERSAL HEADER CTA BUTTON (Hero, Default, Partners)
+   ========================================================== */
+.hg-header-cta {
+  @apply rounded-full font-semibold shadow transition
+         text-sm md:text-base   /* permite crescer um pouco */
+         px-8 py-2             /* padding aumentado */
+         flex items-center justify-center;
+}
+
+/* ==========================================================
+   UNIVERSAL SELECT PILL (radio/checkbox options)
+   ========================================================== */
+
+.hg-select-pill {
+  @apply inline-flex items-center justify-center
+         rounded-[var(--radius-pill)]
+         px-4 py-2 text-sm font-medium
+         bg-surface-soft text-text-main
+         border border-border-soft
+         transition-all duration-150 ease-out cursor-pointer
+         select-none;
+}
+
+.hg-select-pill:hover {
+  @apply bg-brand-orange-soft/60 text-brand-orange;
+  transform: translateY(-1px);
+}
+
+/* checked state via peer */
+.peer:checked + .hg-select-pill {
+  @apply bg-brand-orange-soft text-brand-orange border-brand-orange;
+  transform: translateY(-1px);
+}
