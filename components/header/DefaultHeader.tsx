@@ -37,7 +37,7 @@ export default function DefaultHeader() {
                 {/* CTA LARANJA */}
                 <Link
                     href="/book"
-                    className="rounded-full bg-brand-orange text-white px-6 py-2 text-sm font-semibold shadow hover:bg-brand-orange-soft transition"
+                    className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft"
                 >
                     Find a Specialist
                 </Link>

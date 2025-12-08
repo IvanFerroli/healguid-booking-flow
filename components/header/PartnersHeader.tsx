@@ -45,7 +45,7 @@ export default function PartnersHeader() {
                 {/* CTA TEAL (APPLY) */}
                 <Link
                     href="/partners/apply"
-                    className="rounded-full bg-brand-teal text-white px-6 py-2 text-sm font-semibold shadow hover:bg-brand-teal-soft transition"
+                    className="hg-header-cta bg-brand-teal text-white hover:bg-brand-teal-soft"
                 >
                     Apply
                 </Link>
