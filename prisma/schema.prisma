@@ -54,9 +54,15 @@ model Booking {
   email           String
   phone           String
 
-  status          String       // "pending" | "confirmed" | "failed" | (futuro "cancelled")
+  status          String       // "pending" | "confirmed" | "failed" | "cancelled"
   stripeSessionId String?
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model StripeWebhookEvent {
+  id        String   @id           // event.id do Stripe (ex: evt_123...)
+  type      String                // tipo do evento (ex: checkout.session.completed)
+  createdAt DateTime @default(now())
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type CancelPageProps = {
   searchParams: Promise<{ bookingId?: string }>;
@@ -9,33 +9,103 @@ type CancelPageProps = {
 export default function CancelPage({ searchParams }: CancelPageProps) {
   const { bookingId } = React.use(searchParams);
 
+  const [booking, setBooking] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!bookingId) {
+      setLoading(false);
+      return;
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(`/api/bookings/${bookingId}`);
+        const data = await res.json();
+        if (res.ok) setBooking(data);
+      } catch {}
+      finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, [bookingId]);
+
+  const status = booking?.status;
+
+  const isConfirmed = status === "confirmed";
+  const isPending   = status === "pending";
+  const isFailed    = status === "failed";
+
   return (
-    <div className="hg-page flex items-center justify-center p-10">
+    <div className="hg-page hg-default-page flex items-center justify-center p-10">
       <div className="hg-card max-w-xl mx-auto text-center">
-        <h1 className="hg-h2 mb-2 text-hg-teal">Pagamento cancelado</h1>
 
-        <p className="hg-body mb-4">
-          Sua sessão de pagamento foi cancelada. Nenhuma cobrança foi realizada.
-        </p>
-
-        {bookingId && (
-          <p className="hg-caption mb-4">
-            Referência da reserva:{" "}
-            <span className="font-semibold">{bookingId}</span>
-          </p>
+        {/* Loading state */}
+        {loading && (
+          <>
+            <h1 className="hg-h2 mb-2">Loading…</h1>
+            <p className="hg-body">Please wait a moment.</p>
+          </>
         )}
 
-        <p className="hg-body mb-6 text-gray-700">
-          Se desejar, você pode escolher outro horário ou tentar novamente mais
-          tarde.
-        </p>
+        {/* No bookingId provided */}
+        {!loading && !bookingId && (
+          <>
+            <h1 className="hg-h2 mb-2 text-hg-teal">Payment canceled</h1>
+            <p className="hg-body mb-6">
+              Your payment session was canceled. No charges were made.
+            </p>
+          </>
+        )}
 
+        {/* Booking found */}
+        {!loading && bookingId && (
+          <>
+            {/* CASE 1 — Payment actually succeeded */}
+            {isConfirmed && (
+              <>
+                <h1 className="hg-h2 mb-2 text-hg-teal">Payment completed ✔️</h1>
+                <p className="hg-body mb-4">
+                  Although you left the checkout, your payment was successfully processed.
+                </p>
+              </>
+            )}
+
+            {/* CASE 2 — User abandoned/canceled */}
+            {isPending && (
+              <>
+                <h1 className="hg-h2 mb-2 text-hg-teal">Payment canceled</h1>
+                <p className="hg-body mb-4">
+                  No charges were made. Your payment attempt was canceled.
+                </p>
+              </>
+            )}
+
+            {/* CASE 3 — Payment failed */}
+            {isFailed && (
+              <>
+                <h1 className="hg-h2 mb-2 text-red-600">Payment failed ❌</h1>
+                <p className="hg-body mb-4">
+                  Your payment attempt could not be completed.
+                </p>
+              </>
+            )}
+
+            <p className="hg-caption mb-4">
+              Booking reference: <strong>{bookingId}</strong>
+            </p>
+          </>
+        )}
+
+        {/* CTA Buttons */}
         <a href="/book" className="hg-btn mt-2">
-          Ver profissionais
+          Find a specialist
         </a>
 
         <a href="/" className="hg-body mt-4 block text-gray-600">
-          Voltar ao início
+          Back to homepage
         </a>
       </div>
     </div>

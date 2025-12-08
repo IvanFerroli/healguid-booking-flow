@@ -12,7 +12,7 @@ interface BookingData {
   practitioner: {
     id: number;
     name: string;
-    specialty: string;
+    title: string;
   };
 }
 
@@ -29,7 +29,7 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
 
   useEffect(() => {
     if (!bookingId) {
-      setError("ID da reserva ausente.");
+      setError("Missing booking ID.");
       setLoading(false);
       return;
     }
@@ -40,7 +40,7 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
         const data = await res.json();
 
         if (!res.ok) {
-          setError(data.error || "Não foi possível carregar a reserva.");
+          setError(data.error || "Unable to load booking.");
           setLoading(false);
           return;
         }
@@ -49,7 +49,7 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Erro ao buscar dados da reserva.");
+        setError("Failed to fetch booking details.");
         setLoading(false);
       }
     }
@@ -57,12 +57,39 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     load();
   }, [bookingId]);
 
+  // Auto-polling while pending
+  useEffect(() => {
+    if (!bookingId) return;
+
+    let interval: any;
+    let attempts = 0;
+
+    interval = setInterval(async () => {
+      attempts++;
+
+      const res = await fetch(`/api/bookings/${bookingId}`);
+      const data = await res.json();
+
+      if (data?.status === "confirmed") {
+        setBooking(data);
+        clearInterval(interval);
+      }
+
+      // timeout ~45s
+      if (attempts > 15) {
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [bookingId]);
+
   if (loading) {
     return (
-      <div className="hg-page flex items-center justify-center p-10">
+      <div className="hg-page hg-default-page flex items-center justify-center p-10">
         <div className="hg-card text-center max-w-md">
-          <h2 className="hg-h2 mb-3">Carregando sua reserva...</h2>
-          <p className="hg-body">Aguarde um instante.</p>
+          <h2 className="hg-h2 mb-3">Loading your booking...</h2>
+          <p className="hg-body">Please wait a moment.</p>
         </div>
       </div>
     );
@@ -72,20 +99,20 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
         <div className="hg-card text-center max-w-md border-red-300 bg-red-50">
-          <h2 className="hg-h2 text-red-600 mb-3">Algo deu errado</h2>
+          <h2 className="hg-h2 text-red-600 mb-3">Something went wrong</h2>
           <p className="hg-body mb-6">
-            {error || "Reserva não encontrada ou inválida."}
+            {error || "Booking not found or invalid."}
           </p>
 
           <a href="/" className="hg-btn mt-4">
-            Voltar ao início
+            Back to homepage
           </a>
         </div>
       </div>
     );
   }
 
-  const slot = new Date(booking.slot).toLocaleString("pt-BR", {
+  const slot = new Date(booking.slot).toLocaleString("en-US", {
     dateStyle: "full",
     timeStyle: "short",
   });
@@ -99,26 +126,23 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
         <div className="hg-card max-w-xl mx-auto text-center border-red-300 bg-red-50">
-          <h1 className="hg-h2 mb-2 text-red-600">
-            Pagamento não concluído ❌
-          </h1>
+          <h1 className="hg-h2 mb-2 text-red-600">Payment failed ❌</h1>
 
           <p className="hg-body mb-6">
-            Não foi possível processar o seu pagamento. Nenhuma cobrança foi
-            realizada.
+            We could not process your payment. No charges were made.
           </p>
 
           <div className="bg-hg-bg-section rounded-xl p-5 mb-6 text-left">
-            <h3 className="hg-h3 mb-3 text-hg-teal">Resumo da tentativa</h3>
+            <h3 className="hg-h3 mb-3 text-hg-teal">Attempt summary</h3>
 
             <p className="hg-body">
-              <strong>Profissional:</strong> {booking.practitioner.name}
+              <strong>Practitioner:</strong> {booking.practitioner.name}
             </p>
             <p className="hg-body">
-              <strong>Especialidade:</strong> {booking.practitioner.specialty}
+              <strong>Specialty:</strong> {booking.practitioner.title}
             </p>
             <p className="hg-body">
-              <strong>Horário:</strong> {slot}
+              <strong>Time:</strong> {slot}
             </p>
             <p className="hg-body">
               <strong>Status:</strong>{" "}
@@ -128,90 +152,127 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
             </p>
 
             <p className="hg-caption mt-1">
-              Código da reserva:{" "}
+              Booking reference:{" "}
               <span className="font-semibold">{booking.id}</span>
             </p>
           </div>
 
           <p className="hg-body text-gray-700 mb-6">
-            Você pode tentar novamente agendar esta consulta com outro método
-            de pagamento ou em outro horário.
+            You can try booking again with another payment method or at
+            a different time.
           </p>
 
-          <a
-            href={`/book/${booking.practitioner.id}`}
-            className="hg-btn mt-4"
-          >
-            Tentar novamente
+          <a href={`/book/${booking.practitioner.id}`} className="hg-btn mt-4">
+            Try again
           </a>
 
           <a href="/" className="hg-body mt-4 block text-gray-600">
-            Voltar ao início
+            Back to homepage
           </a>
         </div>
       </div>
     );
   }
 
+  const statusClass =
+    isConfirmed
+      ? "text-green-600 font-semibold"
+      : isPending
+        ? "text-yellow-600 font-semibold"
+        : isFailed
+          ? "text-red-600 font-semibold"
+          : "text-gray-600 font-semibold"; // e.g. cancelled
+
   return (
-    <div className="hg-page flex items-center justify-center p-10">
+    <div className="hg-page hg-default-page flex items-center justify-center p-10">
       <div className="hg-card max-w-xl mx-auto text-center">
+
+
         <h1 className="hg-h2 mb-2 text-hg-teal">
           {isConfirmed
-            ? "Consulta confirmada! 🎉"
-            : "Pagamento em processamento…"}
+            ? "Booking confirmed! 🎉"
+            : "Processing payment…"}
         </h1>
 
         <p className="hg-body mb-6">
           {isConfirmed
-            ? "Sua consulta foi agendada com sucesso."
-            : "Estamos aguardando a confirmação do seu pagamento. Isso pode levar alguns segundos."}
+            ? "Your consultation has been successfully scheduled."
+            : "We are waiting for your payment confirmation. This may take a few seconds."}
         </p>
 
         <div className="bg-hg-bg-section rounded-xl p-5 mb-6 text-left">
-          <h3 className="hg-h3 mb-3 text-hg-teal">Resumo da Reserva</h3>
+          <h3 className="hg-h3 mb-3 text-hg-teal">Booking Summary</h3>
 
           <p className="hg-body">
-            <strong>Profissional:</strong> {booking.practitioner.name}
+            <strong>Practitioner:</strong> {booking.practitioner.name}
           </p>
           <p className="hg-body">
-            <strong>Especialidade:</strong> {booking.practitioner.specialty}
+            <strong>Specialty:</strong> {booking.practitioner.title}
           </p>
           <p className="hg-body">
-            <strong>Horário:</strong> {slot}
+            <strong>Time:</strong> {slot}
           </p>
           <p className="hg-body">
-            <strong>Paciente:</strong> {booking.name}
+            <strong>Client:</strong> {booking.name}
           </p>
           <p className="hg-body">
             <strong>Status:</strong>{" "}
-            <span
-              className={
-                isConfirmed
-                  ? "text-green-600 font-semibold"
-                  : "text-yellow-600 font-semibold"
-              }
-            >
-              {booking.status}
-            </span>
+            <span className={statusClass}>{booking.status}</span>
           </p>
 
           <p className="hg-caption mt-1">
-            Código da reserva:{" "}
+            Booking reference:{" "}
             <span className="font-semibold">{booking.id}</span>
           </p>
+
+        </div>
+
+        {/* breadcrumb + cancel pill dentro do card */}
+        <div className="flex items-center justify-between mb-4">
+          <a
+            href="/"
+            className="text-sm text-brand-teal underline-offset-2 hover:underline"
+          >
+            ← Back to homepage
+          </a>
+
+          {isConfirmed && (
+            <button
+              onClick={async () => {
+                try {
+                  const res = await fetch(
+                    `/api/bookings/${bookingId}/cancel`,
+                    {
+                      method: "POST",
+                    }
+                  );
+
+                  if (res.ok) {
+                    setBooking((prev) =>
+                      prev ? { ...prev, status: "cancelled" } : prev
+                    );
+                  }
+                } catch (err) {
+                  console.error("Failed to cancel booking", err);
+                }
+              }}
+              className="
+                px-4 py-1.5 rounded-full border text-sm
+                text-gray-600 bg-gray-100
+                hover:bg-red-100 hover:text-red-700
+                transition-all font-medium
+              "
+            >
+              Cancel
+            </button>
+          )}
         </div>
 
         {isPending && (
-          <p className="hg-body text-gray-600 mb-6">
-            Você pode atualizar esta página em alguns segundos para verificar a
-            confirmação.
+          <p className="hg-body text-gray-600 mb-2">
+            You may refresh this page in a few seconds to check for confirmation.
           </p>
         )}
-
-        <a href="/" className="hg-btn mt-4">
-          Voltar ao início
-        </a>
       </div>
     </div>
   );
