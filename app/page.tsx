@@ -326,7 +326,7 @@ function WhatWeOfferSection() {
             </p>
           </div>
 
-          <Link href="/book/1" className="hg-btn-secondary">
+          <Link href="/book" className="hg-btn-secondary">
             Start Your Matching Journey
           </Link>
         </div>

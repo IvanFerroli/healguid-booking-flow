@@ -117,7 +117,7 @@ export default async function Page({ params }: PageProps) {
                 <header className="space-y-3">
                     {/* Breadcrumb simples */}
                     <a
-                        href="/"
+                        href="/book"
                         className="text-sm text-brand-teal underline-offset-2 hover:underline"
                     >
                         ← Back to all practitioners

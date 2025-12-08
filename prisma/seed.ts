@@ -39,7 +39,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
         "CNHC (Complementary and Natural Healthcare Council)",
       ]),
 
-      eventTypeId: "4101916",
+      eventTypeId: "4106972",
       basePrice: 80,
     },
 

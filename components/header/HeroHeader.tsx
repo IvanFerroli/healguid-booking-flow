@@ -49,23 +49,61 @@ export default function HeroHeader() {
                 {/* MENU ENXUTO */}
                 <nav
                     className={[
-                        "hidden md:flex items-center gap-10 text-sm font-medium",
+                        "hidden md:flex items-center gap-8 text-sm font-medium",
                         scrolled ? "text-text-main" : "text-white",
                     ].join(" ")}
                 >
-                    <Link
-                        href="/partners"
-                        className={scrolled ? "hover:text-brand-teal" : "hover:text-brand-orange-soft"}
-                    >
-                        For Practitioners
-                    </Link>
-                    <Link
-                        href="/#about"
-                        className={scrolled ? "hover:text-brand-teal" : "hover:text-brand-orange-soft"}
-                    >
-                        About
-                    </Link>
+                    {scrolled ? (
+                        <>
+                            <Link
+                                href="/#about"
+                                className="hover:text-brand-teal"
+                            >
+                                About
+                            </Link>
+                            <Link
+                                href="/#treatments"
+                                className="hover:text-brand-teal"
+                            >
+                                Approaches
+                            </Link>
+                            <Link
+                                href="/#match"
+                                className="hover:text-brand-teal"
+                            >
+                                Get Matched
+                            </Link>
+                            <Link
+                                href="/#journey"
+                                className="hover:text-brand-teal"
+                            >
+                                Journey
+                            </Link>
+                            <Link
+                                href="/#promise"
+                                className="hover:text-brand-teal"
+                            >
+                                Mission
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/partners"
+                                className="hover:text-brand-orange-soft"
+                            >
+                                For Practitioners
+                            </Link>
+                            <Link
+                                href="/#about"
+                                className="hover:text-brand-orange-soft"
+                            >
+                                About
+                            </Link>
+                        </>
+                    )}
                 </nav>
+
 
                 {/* CTA PRINCIPAL PACIENTE */}
                 <Link
