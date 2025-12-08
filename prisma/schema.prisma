@@ -16,13 +16,17 @@ model Practitioner {
   shortBio          String               // texto usado nos cards (1 parágrafo curto)
   longBio           String               // o bloco “Why I Help Patients”
 
-  tags              String[]             // Anxiety, Gut Health, etc
+  // Listas armazenadas como JSON em string para compatibilidade com SQLite
+  // Exemplo de valor: ["Anxiety","Gut Health","Sleep"]
+  tags              String   @default("[]") // JSON: stringified string[]
 
   country           String               // "United Kingdom"
   city              String?              // opcional
   consultationType  String               // "Virtual", "In-person", “Hybrid”
 
-  languages         String[]
+  // Exemplo de valor: ["English","Portuguese"]
+  languages         String   @default("[]") // JSON: stringified string[]
+
   experienceYears   Int
   hourlyRate        Int                  // ex: 80
 
@@ -30,18 +34,18 @@ model Practitioner {
   successfulSessions String              // ex: “Recently joined HealGuid”
   memberSince        DateTime
 
-  professionalAssociations String[]
+  // Exemplo de valor: ["BANT","CNHC"]
+  professionalAssociations String @default("[]") // JSON: stringified string[]
 
   // original project fields
-  eventTypeId String
-  basePrice   Int
+  eventTypeId       String               // usado para mapear no Cal.com
+  basePrice         Int                  // usado para Stripe (GBP * 100)
 
-  bookings    Booking[]
+  bookings          Booking[]
 }
 
-
 model Booking {
-  id              Int       @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   practitionerId  Int
   practitioner    Practitioner @relation(fields: [practitionerId], references: [id])
 
@@ -50,7 +54,7 @@ model Booking {
   email           String
   phone           String
 
-  status          String
+  status          String       // "pending" | "confirmed" | "failed" | (futuro "cancelled")
   stripeSessionId String?
 
   createdAt       DateTime @default(now())

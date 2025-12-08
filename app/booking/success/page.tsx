@@ -57,7 +57,6 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     load();
   }, [bookingId]);
 
-  // Estado de carregamento
   if (loading) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
@@ -69,7 +68,6 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     );
   }
 
-  // Erro genérico ou reserva inexistente
   if (error || !booking) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
@@ -97,7 +95,6 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
   const isPending = status === "pending";
   const isFailed = status === "failed";
 
-  // Tela específica para pagamento falhado
   if (isFailed) {
     return (
       <div className="hg-page flex items-center justify-center p-10">
@@ -156,7 +153,6 @@ export default function SuccessPage({ searchParams }: SuccessPageProps) {
     );
   }
 
-  // Telas para confirmed / pending
   return (
     <div className="hg-page flex items-center justify-center p-10">
       <div className="hg-card max-w-xl mx-auto text-center">

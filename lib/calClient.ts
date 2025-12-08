@@ -1,21 +1,46 @@
-import { addDays, formatISO } from "date-fns";
+import { addDays, addMinutes, formatISO } from "date-fns";
+
+/**
+ * Cal.com Starter API (Free plan)
+ *
+ * - Usa somente a API v1
+ * - API key deve ser enviada via querystring (?apiKey=xxx)
+ * - NÃO usar header Authorization
+ * - Endpoint correto: /v1/slots
+ */
 
 const CAL_API_BASE = "https://api.cal.com/v1";
+
+type CalV1SlotsResponse = {
+  slots?: {
+    [date: string]: { time: string }[];
+  };
+};
+
+export type NormalizedSlot = {
+  start: string;
+  end: string;
+  duration: number;
+};
 
 export async function fetchCalAvailability(eventTypeId: string) {
   const now = new Date();
   const rangeStart = formatISO(now, { representation: "complete" });
   const rangeEnd = formatISO(addDays(now, 14), { representation: "complete" });
 
-  const url = `${CAL_API_BASE}/event-types/${eventTypeId}/slots?start=${rangeStart}&end=${rangeEnd}`;
+  const url =
+    `${CAL_API_BASE}/slots` +
+    `?apiKey=${process.env.CAL_API_KEY ?? ""}` +
+    `&eventTypeId=${eventTypeId}` +
+    `&startTime=${rangeStart}` +
+    `&endTime=${rangeEnd}` +
+    `&timeZone=Europe/London`;
 
   try {
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-
-        Authorization: `Bearer ${process.env.CAL_API_KEY ?? ""}`,
       },
       cache: "no-store",
     });
@@ -24,12 +49,32 @@ export async function fetchCalAvailability(eventTypeId: string) {
       throw new Error(`Cal.com returned HTTP ${res.status}`);
     }
 
-    const data = await res.json();
+    const json = (await res.json()) as CalV1SlotsResponse;
+
+    const normalized: NormalizedSlot[] = [];
+
+    if (json.slots) {
+      for (const daySlots of Object.values(json.slots)) {
+        for (const s of daySlots) {
+          if (!s.time) continue;
+
+          const start = new Date(s.time);
+          const end = addMinutes(start, 60);
+
+          normalized.push({
+            start: start.toISOString(),
+            end: end.toISOString(),
+            duration: 60,
+          });
+        }
+      }
+    }
+
     return {
       range: { start: rangeStart, end: rangeEnd },
-      timezone: data?.timezone ?? "UTC",
-      slots: data?.slots ?? [],
-      raw: data,
+      timezone: "Europe/London",
+      slots: normalized,
+      raw: json,
     };
   } catch (err: any) {
     console.error("[calClient] Error fetching availability:", err);
