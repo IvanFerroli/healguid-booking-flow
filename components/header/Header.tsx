@@ -3,15 +3,23 @@
 import { usePathname } from "next/navigation";
 import HeroHeader from "./HeroHeader";
 import DefaultHeader from "./DefaultHeader";
+import PartnersHeader from "./PartnersHeader";
 
 export default function Header() {
   const pathname = usePathname();
 
   const isLanding =
-    pathname === "/" ||
-    pathname.startsWith("/#") ||
-    pathname === "/index";
+    pathname === "/" || pathname === "/index" || pathname === "";
 
-  if (isLanding) return <HeroHeader />;
+  const isPartners = pathname.startsWith("/partners");
+
+  if (isLanding) {
+    return <HeroHeader />;
+  }
+
+  if (isPartners) {
+    return <PartnersHeader />;
+  }
+
   return <DefaultHeader />;
 }

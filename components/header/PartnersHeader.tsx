@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const LOGO_SRC = "/images/logos/healGuid-v2.svg";
 
-export default function DefaultHeader() {
+export default function PartnersHeader() {
+    const pathname = usePathname();
+    const isPartnersRoute = pathname.startsWith("/partners");
+
     return (
         <header className="fixed top-0 left-0 w-full bg-white text-text-main shadow-md z-30 border-b border-border-soft">
             <div className="mx-auto max-w-7xl flex items-center justify-between px-8 py-4">
-
                 {/* LOGO */}
                 <Link href="/" className="flex items-center">
                     <Image
@@ -21,25 +24,30 @@ export default function DefaultHeader() {
                     />
                 </Link>
 
-                {/* MENU GLOBAL PACIENTE */}
+                {/* MENU PARCEIROS */}
                 <nav className="hidden md:flex items-center gap-10 text-sm font-medium">
-                    <Link href="/partners" className="hover:text-brand-teal">
-                        For Practitioners
+                    <Link
+                        href={isPartnersRoute ? "/" : "/partners"}
+                        className="hover:text-brand-teal"
+                    >
+                        {isPartnersRoute ? "For Clients" : "For Practitioners"}
                     </Link>
+
                     <Link href="/#about" className="hover:text-brand-teal">
                         About
                     </Link>
+
                     <Link href="/#journey" className="hover:text-brand-teal">
                         How We Work
                     </Link>
                 </nav>
 
-                {/* CTA LARANJA */}
+                {/* CTA TEAL (APPLY) */}
                 <Link
-                    href="/book"
-                    className="rounded-full bg-brand-orange text-white px-6 py-2 text-sm font-semibold shadow hover:bg-brand-orange-soft transition"
+                    href="/partners/apply"
+                    className="rounded-full bg-brand-teal text-white px-6 py-2 text-sm font-semibold shadow hover:bg-brand-teal-soft transition"
                 >
-                    Find a Specialist
+                    Apply
                 </Link>
             </div>
         </header>

@@ -14,7 +14,7 @@ async function main() {
     {
       name: "Benjamin R.",
       title: "Nutritional Therapist",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_benjamin_r.jpg",
       shortBio:
         "Performance-focused nutrition specialist helping clients improve sleep, stress resilience and metabolic health.",
       longBio: `I'm Benjamin, a qualified, regulated, performance-focused nutrition & lifestyle medicine practitioner with a strong focus on enhancing healthspan, body composition, sleep and stress.
@@ -46,7 +46,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Christelle S.",
       title: "Functional Medicine Practitioner",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_christelle_s.jpg",
       shortBio:
         "Helps patients uncover root causes through whole-person functional medicine and personalised investigation.",
       longBio: `I help people who feel lost in the healthcare system finally understand the root causes of their symptoms. My approach combines deep listening, detailed investigation and realistic treatment plans that empower each patient.`,
@@ -70,7 +70,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Dr. Ayiesha M.",
       title: "Integrative Medicine Practitioner",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_ayiesha_m.jpg",
       shortBio:
         "GP specialising in Functional Medicine for hormonal, metabolic and chronic inflammatory conditions.",
       longBio: `As a GP, I saw firsthand how symptom-based medicine fails complex chronic cases. I use Functional Medicine to understand hormonal, metabolic and gut-driven imbalances, helping patients reclaim their energy and long-term wellness.`,
@@ -92,7 +92,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Ignacio G.",
       title: "Osteopathic Practitioner",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_ignacio_g.jpg",
       shortBio:
         "Former athlete helping patients overcome chronic pain through osteopathy, breathwork and movement.",
       longBio: `After a career-ending back injury, I discovered osteopathy's power to restore mobility and reduce pain without surgery. I help patients break free from chronic pain cycles using hands-on treatment and targeted movement strategies.`,
@@ -120,7 +120,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Ines J.",
       title: "Nutritional Therapist",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_ines_j.jpg",
       shortBio:
         "Registered dietitian specialising in digestive issues, women's health, burnout and fatigue.",
       longBio: `My approach is deeply personalised and grounded in science and compassion. I help patients uncover root causes behind digestive issues, hormonal imbalance, chronic stress and unexplained fatigue—creating sustainable, realistic plans.`,
@@ -142,7 +142,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Jonas M.",
       title: "Integrative Medicine Practitioner",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_jonas_m.jpg",
       shortBio:
         "Chronic fatigue and post-viral recovery specialist using nutrigenomics and mind-body strategies.",
       longBio: `I treat post-viral fatigue, long COVID and chronic exhaustion using a combination of nutrigenomics, mitochondrial support and behavioural techniques. Patients appreciate my structured, data-driven approach.`,
@@ -170,7 +170,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Julia K., RD",
       title: "Functional Medicine Practitioner",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_julia_k.jpg",
       shortBio:
         "Gut health specialist supporting patients with IBS, SIBO and food sensitivities.",
       longBio: `My passion for gut health began by caring for my mother. I help patients heal IBS, SIBO and chronic digestive issues using functional nutrition and culturally sensitive interventions.`,
@@ -194,7 +194,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Lara S.",
       title: "Nutritional Therapist",
-      imageUrl: DEFAULT_IMG,
+      imageUrl: "/images/pratictioners/hg_lara_s.jpg",
       shortBio:
         "Therapist specialising in women's health, cancer nutritional support, digestive issues and autoimmune conditions.",
       longBio: `My own challenges with stress, burnout and hormonal imbalance inspired my work. I support women with hormone disorders, digestive issues, autoimmunity and cancer recovery with personalised, compassionate care.`,
@@ -215,6 +215,35 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
       professionalAssociations: JSON.stringify(["BANT", "CNHC"]),
       eventTypeId: "evt_lara_01",
       basePrice: 115,
+    },
+    {
+      name: "Lucia D., ND",
+      title: "Naturopathic Practitioner",
+      imageUrl: "/images/pratictioners/hg_lucia_d.jpg",
+      shortBio:
+        "My autoimmune diagnosis at 25 completely changed my career path – suddenly I understood what my patients were experiencing.",
+      longBio: `My autoimmune diagnosis at 25 completely changed my career path – suddenly I understood what my patients were experiencing.
+
+Today, I support individuals dealing with chronic inflammation, hormonal imbalance and fatigue using naturopathic principles combined with evidence-based functional medicine. My focus is on patient education, empowerment and sustainable long-term healing.`,
+
+      tags: JSON.stringify([
+        "Autoimmune Health",
+        "Inflammation",
+        "Women's Health",
+      ]),
+      country: "United Kingdom",
+      consultationType: "Virtual",
+      languages: JSON.stringify(["English"]),
+      experienceYears: 8,
+      hourlyRate: 105,
+      satisfactionScore: 4.9,
+      successfulSessions: "Hundreds of successful cases",
+      memberSince: new Date("2024-06-11"),
+      professionalAssociations: JSON.stringify([
+        "British Naturopathic Association",
+      ]),
+      eventTypeId: "evt_lucia_01",
+      basePrice: 105,
     },
   ];
 
