@@ -117,9 +117,8 @@ export default async function Page({ params }: PageProps) {
     const availability = await fetchAvailability(practitioner.id);
 
     let slots = availability.slots;
-    let availabilityMode = availability.mode;
-
-    // Fallback: generate example slots when live availability cannot be loaded
+    let availabilityMode: "live" | "fallback" | "error" = availability.mode as
+    "live" | "fallback" | "error";
 
     if (availabilityMode === "error" && slots.length === 0) {
         const now = new Date();
