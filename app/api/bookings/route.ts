@@ -95,26 +95,40 @@ export async function POST(req: Request) {
         practitioner.eventTypeId.toString()
       );
 
-      isSlotValid = Array.isArray(availability.slots) &&
-        availability.slots.length > 0 &&
-        availability.slots.some(
-          (s: any) =>
-            new Date(s.start).getTime() === new Date(slot).getTime()
+      const calSlots = Array.isArray(availability.slots)
+        ? availability.slots
+        : [];
+
+      const requestedTimeMs = new Date(slot).getTime();
+
+      if (calSlots.length > 0 && !Number.isNaN(requestedTimeMs)) {
+        isSlotValid = calSlots.some((s: any) => {
+          const candidate = (s && (s.start ?? (s as any).time)) as
+            | string
+            | undefined;
+
+          if (!candidate) return false;
+
+          const candidateMs = new Date(candidate).getTime();
+          if (Number.isNaN(candidateMs)) return false;
+
+          return Math.abs(candidateMs - requestedTimeMs) < 1000;
+        });
+      } else {
+        console.warn(
+          "[bookings] No Cal.com slots returned or invalid requested slot time — accepting slot via fallback"
         );
 
-
-      if (!isSlotValid && Array.isArray(availability.slots) && availability.slots.length === 0) {
-        console.warn("[bookings] No Cal.com slots returned — accepting slot via fallback");
         isSlotValid = true;
       }
-
     } catch (err) {
       console.error(
         "[bookings] Skipping slot revalidation due to Cal.com error:",
         err
       );
-
+      isSlotValid = true;
     }
+
 
     if (!isSlotValid) {
       return NextResponse.json(
