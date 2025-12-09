@@ -1,7 +1,6 @@
-/**
- * Fetches 14-day availability from Cal.com (v1 /slots),
- * normalizes to ISO slots and enforces London timezone.
- */
+"use server";
+
+/** Fetches 14-day availability from Cal.com (v1 /slots), normalizes to ISO slots and enforces London timezone. */
 
 import { addDays, addMinutes, formatISO } from "date-fns";
 
@@ -24,30 +23,13 @@ export async function fetchCalAvailability(eventTypeId: string) {
     const rangeStart = formatISO(now, { representation: "complete" });
     const rangeEnd = formatISO(addDays(now, 14), { representation: "complete" });
 
-    // 🔍 Log básico — não vaza segredo
-    console.log("[calClient] fetchCalAvailability()", {
-        eventTypeId,
-        hasApiKey: !!process.env.CAL_API_KEY,
-    });
-
-    const apiKey = process.env.CAL_API_KEY ?? "";
-
     const url =
         `${CAL_API_BASE}/slots` +
-        `?apiKey=${apiKey}` + // ok porque logs abaixo ocultam
+        `?apiKey=${process.env.CAL_API_KEY ?? ""}` +
         `&eventTypeId=${eventTypeId}` +
         `&startTime=${rangeStart}` +
         `&endTime=${rangeEnd}` +
         `&timeZone=Europe/London`;
-
-    // 🔍 Log da requisição — sem mostrar a key
-    console.log("[calClient] Requesting Cal.com", {
-        eventTypeId,
-        rangeStart,
-        rangeEnd,
-        timezone: "Europe/London",
-        urlPreview: url.replace(apiKey, "***REDACTED***"),
-    });
 
     try {
         const res = await fetch(url, {
@@ -58,22 +40,11 @@ export async function fetchCalAvailability(eventTypeId: string) {
             cache: "no-store",
         });
 
-        // 🔍 Log do status
-        console.log("[calClient] Cal.com response status:", res.status);
-
-        const rawBody = await res.text();
-
-        // 🔍 Log do corpo cru (primeiros 500 chars)
-        console.log(
-            "[calClient] Cal.com raw body:",
-            rawBody.slice(0, 500)
-        );
-
         if (!res.ok) {
             throw new Error(`Cal.com returned HTTP ${res.status}`);
         }
 
-        const json = JSON.parse(rawBody) as CalV1SlotsResponse;
+        const json = (await res.json()) as CalV1SlotsResponse;
 
         const normalized: NormalizedSlot[] = [];
 
@@ -105,3 +76,6 @@ export async function fetchCalAvailability(eventTypeId: string) {
         throw new Error("CAL_COM_ERROR");
     }
 }
+
+console.log("CAL_API_KEY exists?", !!process.env.CAL_API_KEY);
+console.log("CAL_API_KEY value:", process.env.CAL_API_KEY?.slice(0, 5) + "...");
