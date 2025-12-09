@@ -1,9 +1,9 @@
 "use client";
 
-import PractitionerHero from "./PractitionerHero";
-import PractitionerMeta from "./PractitionerMeta";
-import PractitionerDetails from "./PractitionerDetails";
-import PractitionerStats from "./PractitionerStats";
+import PractitionerHero from "./components/PractitionerHero";
+import PractitionerMeta from "./components/PractitionerMeta";
+import PractitionerDetails from "./components/PractitionerDetails";
+import PractitionerStats from "./components/PractitionerStats";
 import type { PractitionerData } from "./types";
 
 interface PractitionerPageProps {
