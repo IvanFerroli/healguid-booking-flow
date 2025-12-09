@@ -34,7 +34,7 @@ export function SlotDayGroup({ day, slots, selectedSlot, onSelectSlot }: Props) 
               onClick={() =>
                 onSelectSlot({
                   ...slot,
-                  start: new Date(slot.start ?? (slot as any).time).toISOString(),
+                  start: slot.start ?? (slot as any).time,
                   end: new Date(slot.start ?? (slot as any).time).toISOString(),
                   duration: slot.duration ?? 60,
                 })

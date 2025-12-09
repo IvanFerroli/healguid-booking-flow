@@ -75,10 +75,22 @@ export default async function Page({ params }: PageProps) {
  * Returns "live" mode when successful, otherwise "error".
  */
 
-    async function fetchAvailability(practitionerId: number): Promise<AvailabilityResult> {
+    function getBaseUrl() {
+        if (process.env.NEXT_PUBLIC_APP_URL) {
+            return process.env.NEXT_PUBLIC_APP_URL;
+        }
+        if (process.env.VERCEL_URL) {
+            return `https://${process.env.VERCEL_URL}`;
+        }
+        return "http://localhost:3000";
+    }
+
+    async function fetchAvailability(practitionerId: number) {
         try {
+            const baseUrl = getBaseUrl();
+
             const res = await fetch(
-                `/api/practitioners/${practitionerId}/availability`,
+                `${baseUrl}/api/practitioners/${practitionerId}/availability`,
                 { cache: "no-store" }
             );
 

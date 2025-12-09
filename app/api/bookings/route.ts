@@ -110,17 +110,20 @@ export async function POST(req: Request) {
         practitioner.eventTypeId.toString()
       );
 
-      const calSlots = Array.isArray(availability.slots)
+      const rawSlots = Array.isArray(availability.slots)
         ? availability.slots
         : [];
+
+      const calSlots = rawSlots.map((s: any) => ({
+        start: s.start ?? s.time,
+      }));
+
 
       const requestedTimeMs = new Date(slot).getTime();
 
       if (calSlots.length > 0 && !Number.isNaN(requestedTimeMs)) {
         isSlotValid = calSlots.some((s: any) => {
-          const candidate = (s && (s.start ?? (s as any).time)) as
-            | string
-            | undefined;
+          const candidate = s.start;
 
           if (!candidate) return false;
 
