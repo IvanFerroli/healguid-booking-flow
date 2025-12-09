@@ -97,7 +97,11 @@ export async function POST(req: Request) {
 
       isSlotValid = Array.isArray(availability.slots) &&
         availability.slots.length > 0 &&
-        availability.slots.some((s: any) => s.start === slot);
+        availability.slots.some(
+          (s: any) =>
+            new Date(s.start).getTime() === new Date(slot).getTime()
+        );
+
 
       if (!isSlotValid && Array.isArray(availability.slots) && availability.slots.length === 0) {
         console.warn("[bookings] No Cal.com slots returned — accepting slot via fallback");
