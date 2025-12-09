@@ -261,23 +261,6 @@ These models support:
 * Tracking the **slot** (date/time of the appointment) directly in the `Booking` row.
 * End-to-end status transitions driven by Stripe webhook events.
 
-#### Database diagram slot
-
-You can attach an ER diagram here (for reviewers or future developers).
-Expected path (suggested):
-
-```text
-docs/assets/db-diagram.png
-```
-
-Place the file there and this Markdown will render the image automatically:
-
-```md
-![Database diagram](docs/assets/db-diagram.png)
-```
-
----
-
 ## 4. Booking + Stripe flow (text diagram)
 
 1. Patient lands on `/book`.
@@ -787,12 +770,12 @@ open docs/index.html
 start docs/index.html
 ```
 
+```md
 ### 14.2 TypeDoc screenshot slot
 
 For reviewers, you can add a screenshot of the generated TypeDoc UI.
 
-```md
-![TypeDoc Screenshot](./public/images/typedoc.png)
+![TypeDoc Screenshot](public/images/typedoc.png)
 ```
 
 ---
