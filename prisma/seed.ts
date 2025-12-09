@@ -14,7 +14,7 @@ async function main() {
     {
       name: "Benjamin R.",
       title: "Nutritional Therapist",
-      imageUrl: "/images/pratictioners/hg_benjamin_r.jpg",
+      imageUrl: "/images/practitioners/hg_benjamin_r.jpg",
       shortBio:
         "Performance-focused nutrition specialist helping clients improve sleep, stress resilience and metabolic health.",
       longBio: `I'm Benjamin, a qualified, regulated, performance-focused nutrition & lifestyle medicine practitioner with a strong focus on enhancing healthspan, body composition, sleep and stress.
@@ -46,7 +46,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Christelle S.",
       title: "Functional Medicine Practitioner",
-      imageUrl: "/images/pratictioners/hg_christelle_s.jpg",
+      imageUrl: "/images/practitioners/hg_christelle_s.jpg",
       shortBio:
         "Helps patients uncover root causes through whole-person functional medicine and personalised investigation.",
       longBio: `I help people who feel lost in the healthcare system finally understand the root causes of their symptoms. My approach combines deep listening, detailed investigation and realistic treatment plans that empower each patient.`,
@@ -70,7 +70,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Dr. Ayiesha M.",
       title: "Integrative Medicine Practitioner",
-      imageUrl: "/images/pratictioners/hg_ayiesha_m.jpg",
+      imageUrl: "/images/practitioners/hg_ayiesha_m.jpg",
       shortBio:
         "GP specialising in Functional Medicine for hormonal, metabolic and chronic inflammatory conditions.",
       longBio: `As a GP, I saw firsthand how symptom-based medicine fails complex chronic cases. I use Functional Medicine to understand hormonal, metabolic and gut-driven imbalances, helping patients reclaim their energy and long-term wellness.`,
@@ -92,7 +92,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Ignacio G.",
       title: "Osteopathic Practitioner",
-      imageUrl: "/images/pratictioners/hg_ignacio_g.jpg",
+      imageUrl: "/images/practitioners/hg_ignacio_g.jpg",
       shortBio:
         "Former athlete helping patients overcome chronic pain through osteopathy, breathwork and movement.",
       longBio: `After a career-ending back injury, I discovered osteopathy's power to restore mobility and reduce pain without surgery. I help patients break free from chronic pain cycles using hands-on treatment and targeted movement strategies.`,
@@ -120,7 +120,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Ines J.",
       title: "Nutritional Therapist",
-      imageUrl: "/images/pratictioners/hg_ines_j.jpg",
+      imageUrl: "/images/practitioners/hg_ines_j.jpg",
       shortBio:
         "Registered dietitian specialising in digestive issues, women's health, burnout and fatigue.",
       longBio: `My approach is deeply personalised and grounded in science and compassion. I help patients uncover root causes behind digestive issues, hormonal imbalance, chronic stress and unexplained fatigue—creating sustainable, realistic plans.`,
@@ -142,7 +142,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Jonas M.",
       title: "Integrative Medicine Practitioner",
-      imageUrl: "/images/pratictioners/hg_jonas_m.jpg",
+      imageUrl: "/images/practitioners/hg_jonas_m.jpg",
       shortBio:
         "Chronic fatigue and post-viral recovery specialist using nutrigenomics and mind-body strategies.",
       longBio: `I treat post-viral fatigue, long COVID and chronic exhaustion using a combination of nutrigenomics, mitochondrial support and behavioural techniques. Patients appreciate my structured, data-driven approach.`,
@@ -170,7 +170,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Julia K., RD",
       title: "Functional Medicine Practitioner",
-      imageUrl: "/images/pratictioners/hg_julia_k.jpg",
+      imageUrl: "/images/practitioners/hg_julia_k.jpg",
       shortBio:
         "Gut health specialist supporting patients with IBS, SIBO and food sensitivities.",
       longBio: `My passion for gut health began by caring for my mother. I help patients heal IBS, SIBO and chronic digestive issues using functional nutrition and culturally sensitive interventions.`,
@@ -194,7 +194,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Lara S.",
       title: "Nutritional Therapist",
-      imageUrl: "/images/pratictioners/hg_lara_s.jpg",
+      imageUrl: "/images/practitioners/hg_lara_s.jpg",
       shortBio:
         "Therapist specialising in women's health, cancer nutritional support, digestive issues and autoimmune conditions.",
       longBio: `My own challenges with stress, burnout and hormonal imbalance inspired my work. I support women with hormone disorders, digestive issues, autoimmunity and cancer recovery with personalised, compassionate care.`,
@@ -219,7 +219,7 @@ Shaped by your priorities, enablers and constraints, we co-create a personalised
     {
       name: "Lucia D., ND",
       title: "Naturopathic Practitioner",
-      imageUrl: "/images/pratictioners/hg_lucia_d.jpg",
+      imageUrl: "/images/practitioners/hg_lucia_d.jpg",
       shortBio:
         "My autoimmune diagnosis at 25 completely changed my career path – suddenly I understood what my patients were experiencing.",
       longBio: `My autoimmune diagnosis at 25 completely changed my career path – suddenly I understood what my patients were experiencing.
@@ -248,7 +248,7 @@ Today, I support individuals dealing with chronic inflammation, hormonal imbalan
     {
       name: "Dr. Amir H.",
       title: "Functional Medicine Doctor",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Functional medicine doctor focused on metabolic health, insulin resistance and cardiometabolic risk.",
       longBio: `I help patients who are stuck in cycles of fatigue, weight gain and cardiometabolic risk factors such as high blood pressure and prediabetes.
@@ -276,7 +276,7 @@ Through detailed assessment, advanced lab work and personalised plans, we work t
     {
       name: "Sofia L., RD",
       title: "Functional Gut Dietitian",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Registered dietitian specialising in IBS, IBD and post-infectious gut recovery.",
       longBio: `I support people living with IBS, IBD and chronic gut symptoms who feel overwhelmed by conflicting advice.
@@ -300,7 +300,7 @@ My approach combines evidence-based nutrition, nervous system regulation and rea
     {
       name: "Hannah P.",
       title: "Women's Hormone Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Helps women navigate PMS, PCOS and perimenopause with functional hormone support.",
       longBio: `I work with women who have been told their hormone symptoms are “normal” or “just part of being a woman”.
@@ -326,7 +326,7 @@ Together, we uncover the drivers behind PMS, PMDD, PCOS and perimenopause sympto
     {
       name: "Dr. Michael T.",
       title: "Integrative GP",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "GP blending conventional medicine with lifestyle and functional approaches for chronic conditions.",
       longBio: `As a GP, I saw many patients bounce between referrals without real answers.
@@ -355,7 +355,7 @@ I now combine conventional diagnostics with functional and lifestyle medicine to
     {
       name: "Emma W.",
       title: "Mental Health Nutritionist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Supports anxiety, low mood and burnout through nervous system and nutrition support.",
       longBio: `I specialise in the intersection between nutrition, nervous system regulation and mental health.
@@ -381,7 +381,7 @@ I help clients reduce anxiety, stabilise mood and recover from burnout using tar
     {
       name: "Caroline B.",
       title: "Autoimmune Nutrition Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Helps people with Hashimoto’s, RA and other autoimmune conditions reduce flares and fatigue.",
       longBio: `Living with an autoimmune thyroid condition myself, I understand how exhausting it can be to self-advocate.
@@ -407,7 +407,7 @@ I work with clients to reduce flares, support energy and create sustainable, non
     {
       name: "Priya R., MD",
       title: "Integrative Endocrinologist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Endocrinologist specialising in thyroid, adrenal and blood sugar imbalances.",
       longBio: `I help people who feel dismissed despite ongoing thyroid, adrenal and blood sugar symptoms.
@@ -436,7 +436,7 @@ We pair medical diagnostics with nutrition, supplements and lifestyle support to
     {
       name: "Tom K.",
       title: "Men’s Health Practitioner",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Works with men on energy, performance, and hormone-related health concerns.",
       longBio: `I support men who want better energy, strength, sleep and focus but are not sure where to start.
@@ -462,7 +462,7 @@ Through labs, structured lifestyle changes and realistic nutrition shifts, we wo
     {
       name: "Nadia F.",
       title: "PCOS & Fertility Nutritionist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Supports women with PCOS, cycle irregularity and fertility through functional nutrition.",
       longBio: `I help women with PCOS and subfertility understand their bodies, regulate cycles and improve chances of conception.
@@ -488,7 +488,7 @@ My approach is compassionate, practical and tailored to each woman’s culture, 
     {
       name: "Elena V.",
       title: "Integrative Skin Practitioner",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Focuses on acne, rosacea and eczema using gut-skin and immune support.",
       longBio: `I specialise in skin issues such as acne, rosacea and eczema where topical treatments alone aren’t enough.
@@ -514,7 +514,7 @@ By working on gut health, inflammation and the immune system, we aim for calmer 
     {
       name: "Lauren C.",
       title: "Paediatric Nutrition & Gut Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Supports children's gut health, allergies and picky eating patterns.",
       longBio: `I work with families whose children struggle with allergies, gut issues or very selective eating.
@@ -540,7 +540,7 @@ We create child-friendly, evidence-based plans that respect neurodiversity, sens
     {
       name: "Samuel D.",
       title: "Breathwork & Stress Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Combines breathwork, nervous system regulation and lifestyle coaching for stress and burnout.",
       longBio: `I help people who live in chronic “fight or flight” mode reconnect with rest, recovery and presence.
@@ -566,7 +566,7 @@ Using breathwork, somatic tools and lifestyle shifts, we build a toolkit for reg
     {
       name: "Marta R.",
       title: "Chronic Pain & Fibromyalgia Practitioner",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Supports people with chronic pain, fibromyalgia and hypermobility.",
       longBio: `I work with people who live with chronic pain and feel unheard or dismissed.
@@ -592,7 +592,7 @@ Through pacing strategies, nutrition and nervous system work, we gently build ca
     {
       name: "Chloe S.",
       title: "Sleep & Circadian Health Coach",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Helps adults repair sleep, circadian rhythm and energy crashes.",
       longBio: `I help people who are exhausted but “wired”, waking at 3am, or relying on caffeine to get through the day.
@@ -618,7 +618,7 @@ We map your current patterns and rebuild a rhythm that supports deep sleep and s
     {
       name: "Dr. Oliver J.",
       title: "Integrative Cardiometabolic Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Cardiologist focusing on prevention, lipids and lifestyle for heart health.",
       longBio: `I work with people who want to actively reduce their long-term cardiovascular risk using more than just medication.
@@ -647,7 +647,7 @@ Together we address lipids, blood pressure, inflammation and lifestyle in a stru
     {
       name: "Ana P.",
       title: "Functional Nutritionist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Takes a whole-person approach to fatigue, brain fog and digestive issues.",
       longBio: `I help people who feel “not sick, but not well” – low energy, brain fog, bloating and inconsistent moods.
@@ -673,7 +673,7 @@ We look at nutrition, sleep, stress and movement together to create realistic, l
     {
       name: "Grace M.",
       title: "Postnatal & Matrescence Specialist",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Supports new mothers with recovery, mood, energy and nervous system support.",
       longBio: `I support women in the transition to motherhood (matrescence), focusing on nourishment, recovery and mental health.
@@ -699,7 +699,7 @@ We build a care plan that respects sleep deprivation, time constraints and emoti
     {
       name: "Isabelle T.",
       title: "Functional Health Coach",
-      imageUrl: "/images/pratictioners/hg_default.jpg",
+      imageUrl: "/images/practitioners/hg_default.jpg",
       shortBio:
         "Coaches clients through sustainable lifestyle changes aligned with functional lab findings.",
       longBio: `I work alongside clinicians and nutritionists to help clients actually implement the changes recommended to them.
