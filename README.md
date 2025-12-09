@@ -770,12 +770,15 @@ open docs/index.html
 start docs/index.html
 ```
 
-```md
+```m
 ### 14.2 TypeDoc screenshot slot
 
 For reviewers, you can add a screenshot of the generated TypeDoc UI.
 
-<img src="public/images/typedoc.png" width="800" />
+<p align="center">
+  <img src="public/images/typedoc.png" width="900">
+</p>
+
 ```
 
 ---
