@@ -95,15 +95,21 @@ export async function POST(req: Request) {
         practitioner.eventTypeId.toString()
       );
 
-      isSlotValid = availability.slots.some(
-        (s: any) => s.start === slot
-      );
+      isSlotValid = Array.isArray(availability.slots) &&
+        availability.slots.length > 0 &&
+        availability.slots.some((s: any) => s.start === slot);
+
+      if (!isSlotValid && Array.isArray(availability.slots) && availability.slots.length === 0) {
+        console.warn("[bookings] No Cal.com slots returned — accepting slot via fallback");
+        isSlotValid = true;
+      }
+
     } catch (err) {
       console.error(
         "[bookings] Skipping slot revalidation due to Cal.com error:",
         err
       );
-    
+
     }
 
     if (!isSlotValid) {
