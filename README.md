@@ -743,45 +743,37 @@ Bring the project to a “ready for review” level.
 
 ---
 
-## 14. Code documentation (TypeDoc)
+14. Code documentation (TypeDoc)
 
-The repository includes a TypeDoc configuration (`typedoc.json`) to document:
+The repository includes a TypeDoc configuration (typedoc.json) to document:
 
-* Core modules (`lib/prisma`, `lib/calClient`).
-* Key API routes (`/api/bookings`, `/api/practitioners/[id]/availability`, `/api/webhooks/stripe`).
-* Main React components in the booking flow.
+Core modules (lib/prisma, lib/calClient).
 
-### 14.1 Generate docs
+Key API routes (/api/bookings, /api/practitioners/[id]/availability, /api/webhooks/stripe).
 
-```bash
+Main React components in the booking flow.
+
+14.1 Generate docs
 pnpm docs
-```
 
-* Output goes to `./docs` by default.
-* Open `docs/index.html` in your browser to explore the documentation.
+
+Output goes to ./docs by default.
+
+Open docs/index.html in your browser to explore the documentation.
 
 Example:
 
-```bash
 # On macOS / Linux:
 open docs/index.html
 
 # On Windows:
 start docs/index.html
-```
 
-```m
-### 14.2 TypeDoc screenshot slot
+14.2 TypeDoc screenshot slot
 
 For reviewers, you can add a screenshot of the generated TypeDoc UI.
 
-<p align="center">
-  <img src="public/images/typedoc.png" width="900">
-</p>
-
-```
-
----
+<p align="center"> <img src="public/images/typedoc.png" width="900"> </p>
 
 ## 15. Current limitations & next steps
 
