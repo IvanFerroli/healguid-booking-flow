@@ -14,7 +14,10 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "db:init": "pnpm db:push && pnpm db:seed",
+    "dev:bootstrap": "pnpm db:init && pnpm dev",
+    "dev:full": "concurrently -k -n \"next,stripe,studio\" \"pnpm dev\" \"stripe listen --events checkout.session.completed --forward-to http://localhost:3000/api/webhooks/stripe\" \"pnpm db:studio\""
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -38,6 +41,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.22",
+    "concurrently": "^9.1.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.0.6",
     "postcss": "^8.5.6",
