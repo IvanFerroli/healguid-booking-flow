@@ -775,7 +775,7 @@ start docs/index.html
 
 For reviewers, you can add a screenshot of the generated TypeDoc UI.
 
-![TypeDoc Screenshot](public/images/typedoc.png)
+<img src="public/images/typedoc.png" width="800" />
 ```
 
 ---
