@@ -1,0 +1,12 @@
+# Stripe keys (Test mode only)
+STRIPE_SECRET_KEY=sk_test_51SaFpaALY7S7UpjMHiRvJ8TI2W5UW2i0ag2vpfXnWUs6DDW6PK5Te9NyNOPY76eGFrgGov0JBj3ZsHWlX6Z1hhSR00kQKXjCua
+STRIPE_PUBLISHABLE_KEY=pk_test_51SaFpaALY7S7UpjMKZXhKa5PGBFganeuHoRcoLqMYAVD9AlVnPOCx7w9NM6sXhR5yIxht9LHS9ieNfizGaYaxfUW000GdM9JIg
+
+# Webhook secret
+STRIPE_WEBHOOK_SECRET=whsec_e39fea795bdee043acb6e4fdacfed5adc240426bc22e5a1c01b27319babb68b5
+
+CAL_API_KEY=cal_live_39233776f4273335b5673acd7d64a030
+
+DATABASE_URL="postgresql://neondb_owner:npg_pfVlHsF30KGy@ep-floral-bar-ahwgvw9c.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require"
+
+
