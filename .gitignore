@@ -71,3 +71,4 @@ build/
 
 .vercel/
 .vercel
+.env33.local
