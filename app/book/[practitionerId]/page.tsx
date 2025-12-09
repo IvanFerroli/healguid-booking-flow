@@ -77,13 +77,11 @@ export default async function Page({ params }: PageProps) {
 
     async function fetchAvailability(practitionerId: number): Promise<AvailabilityResult> {
         try {
-            const baseUrl =
-                process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-
             const res = await fetch(
-                `${baseUrl}/api/practitioners/${practitionerId}/availability`,
+                `/api/practitioners/${practitionerId}/availability`,
                 { cache: "no-store" }
             );
+
 
             if (!res.ok) {
                 return { mode: "error", slots: [] };

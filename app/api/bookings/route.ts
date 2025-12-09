@@ -56,8 +56,23 @@ function getStripe() {
 }
 
 
-const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+function getAppUrl(): string {
+  const explicit =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.APP_URL;
+
+  if (explicit) {
+    return explicit.replace(/\/$/, "");
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return "http://localhost:3000";
+}
+
+const APP_URL = getAppUrl();
 
 export async function POST(req: Request) {
   let bookingId: number | null = null;
