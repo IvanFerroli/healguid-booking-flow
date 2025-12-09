@@ -245,7 +245,7 @@ Today, I support individuals dealing with chronic inflammation, hormonal imbalan
       eventTypeId: "4107379",
       basePrice: 105,
     },
-        {
+    {
       name: "Dr. Amir H.",
       title: "Functional Medicine Doctor",
       imageUrl: "/images/pratictioners/hg_default.jpg",
