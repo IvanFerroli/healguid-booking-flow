@@ -9,7 +9,8 @@
 
 import { useState } from "react";
 import { BookingForm } from "./BookingForm";
-import { AvailabilityPicker, Slot } from "./AvailabilityPicker";
+import { AvailabilityPicker } from "./AvailabilityPicker";
+import type { Slot } from "../types";
 
 type PractitionerInfo = {
     id: number;
