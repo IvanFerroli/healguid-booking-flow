@@ -17,6 +17,12 @@ export type NormalizedSlot = {
 };
 
 export async function fetchCalAvailability(eventTypeId: string) {
+    console.log("🔧 CAL_API_KEY exists?", !!process.env.CAL_API_KEY);
+    console.log(
+        "🔧 CAL_API_KEY value (masked):",
+        process.env.CAL_API_KEY ? process.env.CAL_API_KEY.slice(0, 5) + "..." : "undefined"
+    );
+
     const now = new Date();
     const rangeStart = formatISO(now, { representation: "complete" });
     const rangeEnd = formatISO(addDays(now, 14), { representation: "complete" });
@@ -74,3 +80,6 @@ export async function fetchCalAvailability(eventTypeId: string) {
         throw new Error("CAL_COM_ERROR");
     }
 }
+
+console.log("CAL_API_KEY exists?", !!process.env.CAL_API_KEY);
+console.log("CAL_API_KEY value:", process.env.CAL_API_KEY?.slice(0, 5) + "...");
