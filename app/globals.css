@@ -154,3 +154,15 @@ body {
   @apply px-5 sm:px-8; /* diminui mobile, mantém desktop elegante */
 }
 
+/* CTA do perfil do practitioner (mobile + desktop) */
+.hg-practitioner-cta {
+  @apply inline-flex items-center justify-center rounded-[var(--radius-pill)]
+         bg-brand-orange text-white font-semibold shadow-soft
+         transition-all duration-150 ease-out
+         px-4 py-2           /* mobile — menor */
+         sm:px-6 sm:py-2.5;  /* desktop — tamanho cheio */
+}
+
+.hg-practitioner-cta:hover {
+  @apply bg-brand-orange-soft text-brand-orange;
+}

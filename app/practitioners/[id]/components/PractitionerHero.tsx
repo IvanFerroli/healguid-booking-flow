@@ -46,10 +46,12 @@ export default function PractitionerHero({ practitioner }: PractitionerHeroProps
 
       <Link
         href={`/book/${practitioner.id}`}
-        className="hg-btn-primary bg-brand-orange hover:bg-brand-orange-soft"
+        className="hg-practitioner-cta"
       >
-        Request Consultation
+        <span className="sm:hidden">Book</span>
+        <span className="hidden sm:inline">Request Consultation</span>
       </Link>
+
     </section>
   );
 }
