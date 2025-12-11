@@ -1,82 +1,51 @@
-/// HealGuid Database Schema (SQLite)
-///
-/// - Practitioners store all profile, pricing and Cal.com mapping data.
-/// - Bookings track client requests, Stripe payment state and session IDs.
-/// - StripeWebhookEvent ensures idempotent processing of Stripe events.
-///
-/// Notes:
-/// • Arrays are stored as JSON strings for SQLite compatibility.
-/// • Relation: Practitioner 1—N Booking.
-/// • Booking.status drives UX flows: "pending", "confirmed", "failed", "cancelled".
-/// • eventTypeId + basePrice power Cal.com and Stripe integrations.
-
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Practitioner {
-  id                Int       @id @default(autoincrement())
-  name              String
-  title             String?              // ex: “Nutritional Therapist”, “Functional Medicine Practitioner”
-  imageUrl          String
-
-  shortBio          String               // texto usado nos cards (1 parágrafo curto)
-  longBio           String               // o bloco “Why I Help Patients”
-
-  // Listas armazenadas como JSON em string para compatibilidade com SQLite
-  // Exemplo de valor: ["Anxiety","Gut Health","Sleep"]
-  tags              String   @default("[]") // JSON: stringified string[]
-
-  country           String               // "United Kingdom"
-  city              String?              // opcional
-  consultationType  String               // "Virtual", "In-person", “Hybrid”
-
-  // Exemplo de valor: ["English","Portuguese"]
-  languages         String   @default("[]") // JSON: stringified string[]
-
-  experienceYears   Int
-  hourlyRate        Int                  // ex: 80
-
-  satisfactionScore Float                // ex: 5.0
-  successfulSessions String              // ex: “Recently joined HealGuid”
-  memberSince        DateTime
-
-  // Exemplo de valor: ["BANT","CNHC"]
-  professionalAssociations String @default("[]") // JSON: stringified string[]
-
-  // original project fields
-  eventTypeId       String               // usado para mapear no Cal.com
-  basePrice         Int                  // usado para Stripe (GBP * 100)
-
-  bookings          Booking[]
+  id                       Int       @id @default(autoincrement())
+  name                     String
+  title                    String?
+  imageUrl                 String
+  shortBio                 String
+  longBio                  String
+  tags                     String    @default("[]")
+  country                  String
+  city                     String?
+  consultationType         String
+  languages                String    @default("[]")
+  experienceYears          Int
+  hourlyRate               Int
+  satisfactionScore        Float
+  successfulSessions       String
+  memberSince              DateTime
+  professionalAssociations String    @default("[]")
+  eventTypeId              String
+  basePrice                Int
+  bookings                 Booking[]
 }
 
 model Booking {
   id              Int          @id @default(autoincrement())
   practitionerId  Int
-  practitioner    Practitioner @relation(fields: [practitionerId], references: [id])
-
   slot            DateTime
   name            String
   email           String
   phone           String
-
-  status          String       // "pending" | "confirmed" | "failed" | "cancelled"
+  status          String
   stripeSessionId String?
-
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  practitioner    Practitioner @relation(fields: [practitionerId], references: [id])
 }
 
 model StripeWebhookEvent {
-  id        String   @id           // event.id do Stripe (ex: evt_123...)
-  type      String                // tipo do evento (ex: checkout.session.completed)
+  id        String   @id
+  type      String
   createdAt DateTime @default(now())
 }
-

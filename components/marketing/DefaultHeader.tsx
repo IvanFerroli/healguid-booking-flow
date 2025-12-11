@@ -10,7 +10,7 @@ const LOGO_SRC = "/images/logos/healGuid-v2.svg";
 export default function DefaultHeader() {
     return (
         <header className="fixed top-0 left-0 w-full bg-white text-text-main shadow-md z-30 border-b border-border-soft">
-            <div className="mx-auto max-w-7xl flex items-center justify-between px-8 py-4">
+            <div className="mx-auto max-w-7xl flex items-center justify-between px-8 py-4 hg-header-wrap">
 
                 {/* LOGO */}
                 <Link href="/" className="flex items-center">
@@ -39,10 +39,15 @@ export default function DefaultHeader() {
                 {/* CTA LARANJA */}
                 <Link
                     href="/book"
-                    className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft"
+                    className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft hg-header-wrap"
                 >
-                    Find a Specialist
+                    {/* Mobile: até sm */}
+                    <span className="sm:hidden">Match</span>
+
+                    {/* Desktop: de sm pra cima */}
+                    <span className="hidden sm:inline">Find a Specialist</span>
                 </Link>
+
             </div>
         </header>
     );

@@ -28,7 +28,7 @@ export default function HeroHeader() {
             <div
                 className={[
                     "flex items-center justify-between",
-                    "w-full max-w-7xl px-10 py-4",
+                    "w-full max-w-7xl px-10 py-4 hg-header-wrap",
                     "transition-all duration-300",
                     scrolled
                         ? "rounded-[2.5rem] bg-white/95 text-text-main shadow-[0_12px_35px_rgba(15,23,42,0.18)] border border-border-soft"
@@ -110,10 +110,15 @@ export default function HeroHeader() {
                 {/* CTA PRINCIPAL PACIENTE */}
                 <Link
                     href="/book"
-                    className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft"
+                    className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft hg-header-wrap"
                 >
-                    Find a Specialist
+                    {/* Mobile: até sm */}
+                    <span className="sm:hidden">Match</span>
+
+                    {/* Desktop: de sm pra cima */}
+                    <span className="hidden sm:inline">Find a Specialist</span>
                 </Link>
+
             </div>
         </header>
     );

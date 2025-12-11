@@ -113,7 +113,7 @@ body {
 .hg-header-cta {
   @apply rounded-full font-semibold shadow transition
          text-sm md:text-base   /* permite crescer um pouco */
-         px-8 py-2             /* padding aumentado */
+         px-4 sm:px-8 py-2
          flex items-center justify-center;
 }
 
@@ -146,3 +146,11 @@ body {
 .hg-default-page {
   padding-top: 76px; /* mesma altura do header fixo */
 }
+
+/* ==========================================================
+   UNIVERSAL HEADER SPACING (wrapper para logo + CTA)
+   ========================================================== */
+.hg-header-wrap {
+  @apply px-5 sm:px-8; /* diminui mobile, mantém desktop elegante */
+}
+

@@ -9,6 +9,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 type CancelPageProps = {
   searchParams: Promise<{ bookingId?: string }>;
@@ -110,9 +111,17 @@ export default function CancelPage({ searchParams }: CancelPageProps) {
         )}
 
         {/* CTA Buttons */}
-        <a href="/book" className="hg-btn mt-2">
-          Find a specialist
-        </a>
+        <Link
+          href="/book"
+          className="hg-header-cta bg-brand-orange text-white hover:bg-brand-orange-soft"
+        >
+          {/* Mobile: até sm */}
+          <span className="sm:hidden">Match</span>
+
+          {/* Desktop: de sm pra cima */}
+          <span className="hidden sm:inline ">Find a Specialist</span>
+        </Link>
+
 
         <a href="/" className="hg-body mt-4 block text-gray-600">
           Back to homepage
