@@ -45,74 +45,77 @@ export default function LandingPage() {
 
 function HeroSection() {
   return (
-    <section className="relative isolate min-h-[640px] w-full text-white overflow-hidden">
-      {/* Background video */}
-      <video
-        className="absolute inset-0 h-full w-full object-cover"
-        src={HERO_VIDEO}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+    < section className = "relative isolate min-h-[680px] lg:min-h-[720px] w-full text-white overflow-hidden" >
 
-      {/* Dark + color overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/60 to-black/40" />
+    {/* Background video */ }
+    < video
+  className = "absolute inset-0 h-full w-full object-cover"
+  src = { HERO_VIDEO }
+  autoPlay
+  loop
+  muted
+  playsInline
+    />
+
+    {/* Dark + color overlay */ }
+    < div className = "pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/60 to-black/40" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(0,124,130,0.22)_0,_transparent_55%)]" />
 
-      {/* Navbar + hero content */}
-      <div className="relative z-10">
+  {/* Navbar + hero content */ }
+  <div className="relative z-10">
 
-        <div className="hg-section flex flex-col items-center pt-16 pb-20 text-center">
-          <p className="mb-4 text-xs font-semibold tracking-[0.35em] uppercase text-brand-orange-soft">
-            VERIFIED PRACTITIONERS • HOLISTIC & FUNCTIONAL MEDICINE
-          </p>
+    <div className="hg-section flex flex-col items-center pt-28 sm:pt-24 pb-28 sm:pb-24 text-center">
 
-          <h1 className="max-w-3xl text-4xl sm:text-5xl lg:text-[3.1rem] font-extrabold leading-tight drop-shadow-[0_18px_45px_rgba(0,0,0,0.65)]">
-            Verified <span className="text-brand-orange">Holistic</span> & Functional
-            Medicine Practitioners in the UK
-          </h1>
+      <p className="mb-4 text-xs font-semibold tracking-[0.35em] uppercase text-brand-orange-soft">
+        VERIFIED PRACTITIONERS • HOLISTIC & FUNCTIONAL MEDICINE
+      </p>
 
-
-
-          <div className="hg-glass mt-6 px-10 py-6 max-w-3xl text-center">
-            <p className="text-base sm:text-lg leading-relaxed text-white/90 drop-shadow-[0_12px_35px_rgba(0,0,0,0.65)]">
-              Finally feeling <strong>heard</strong>, finally finding{" "}
-              <strong>answers</strong>. HealGuid connects you with trusted
-              practitioners who look beyond symptoms to address the root causes of
-              chronic fatigue, gut issues, autoimmunity and hormone imbalances.
-            </p>
-          </div>
+      <h1 className="max-w-3xl text-4xl sm:text-5xl lg:text-[3.1rem] font-extrabold leading-tight drop-shadow-[0_18px_45px_rgba(0,0,0,0.65)]">
+        Verified <span className="text-brand-orange">Holistic</span> & Functional
+        Medicine Practitioners in the UK
+      </h1>
 
 
-          {/* CTAs */}
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-            <Link href="#match" className="hg-btn-secondary">
-              Find a Practitioner
-            </Link>
-            <Link href="#treatments" className="hg-btn-primary bg-white text-brand-teal">
-              See Our Approaches
-            </Link>
-          </div>
 
-          {/* Hero stats */}
-          <div className="mt-10 flex flex-wrap justify-center gap-6 text-xs sm:text-sm">
-            {[
-              "60–90 min consultations",
-              "Free patient matching",
-              "100% verified practitioners",
-            ].map((label) => (
-              <div
-                key={label}
-                className="rounded-[999px] bg-black/40 px-4 py-2 text-white/85 backdrop-blur-sm border border-white/10"
-              >
-                {label}
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="hg-glass mt-6 px-10 py-6 max-w-3xl text-center">
+        <p className="text-base sm:text-lg leading-relaxed text-white/90 drop-shadow-[0_12px_35px_rgba(0,0,0,0.65)]">
+          Finally feeling <strong>heard</strong>, finally finding{" "}
+          <strong>answers</strong>. HealGuid connects you with trusted
+          practitioners who look beyond symptoms to address the root causes of
+          chronic fatigue, gut issues, autoimmunity and hormone imbalances.
+        </p>
       </div>
-    </section>
+
+
+      {/* CTAs */}
+      <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+        <Link href="#match" className="hg-btn-secondary">
+          Find a Practitioner
+        </Link>
+        <Link href="#treatments" className="hg-btn-primary bg-white text-brand-teal">
+          See Our Approaches
+        </Link>
+      </div>
+
+      {/* Hero stats */}
+      <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-6 text-xs sm:text-sm">
+
+        {[
+          "60–90 min consultations",
+          "Free patient matching",
+          "100% verified practitioners",
+        ].map((label) => (
+          <div
+            key={label}
+            className="rounded-[999px] bg-black/40 px-4 py-2 text-white/85 backdrop-blur-sm border border-white/10"
+          >
+            {label}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+    </section >
   );
 }
 
